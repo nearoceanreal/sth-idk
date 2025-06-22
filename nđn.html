@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Một ngày thật đẹp - Sinh nhật Trang</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;600&display=swap');
+    .gift-img {
+      width: 150px;
+      transition: transform 0.25s ease;
+    }
+
+    .gift-img:hover {
+      transform: scale(2);
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      background: linear-gradient(to bottom right, #fff0f5, #ffe4e1);
+      font-family: 'Quicksand', sans-serif;
+      color: #5e423a;
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 80px;
+      font-size: 72px;
+      font-family: 'Great Vibes', cursive;
+      color: #8f4242;
+      text-shadow: 3px 3px 8px rgba(255, 182, 193, 0.5);
+      animation: fadeIn 2.5s ease-in-out;
+    }
+
+    .poem {
+      font-size: 22px;
+      max-width: 700px;
+      margin: 40px auto;
+      line-height: 2;
+      white-space: pre-line;
+      font-style: italic;
+      color: #6a4e42;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      animation: fadeIn 4s ease-in-out;
+    }
+
+    .cake {
+      width: 180px;
+      margin: 20px auto;
+      animation: float 4s ease-in-out infinite;
+      filter: drop-shadow(0 5px 10px rgba(255,192,203,0.3));
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+        
+    .quote-box {
+      margin: 40px auto;
+      padding: 20px;
+      max-width: 500px;
+      background: #fff5f8;
+      border-left: 6px solid #f06292;
+      font-style: italic;
+      font-size: 1.1em;
+      color: #880e4f;
+    }
+
+    .music {
+      margin-top: 30px;
+      opacity: 0.8;
+    }
+
+    .signature {
+      margin-top: 50px;
+      font-family: 'Great Vibes', cursive;
+      font-size: 36px;
+      color: #a0522d;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 48px;
+      }
+
+      .poem {
+        font-size: 18px;
+        padding: 15px;
+      }
+
+      .cake {
+        width: 140px;
+      }
+
+  </style>
+</head>
+<body>
+  <canvas id="fireworks"></canvas>
+
+  <h1>Chúc mừng sinh nhật Trang</h1>
+
+
+  <div class="quote-box">
+    "Hôm nay là một ngày đặc biệt - vì nó là ngày cậu xuất hiện trên thế giới này. Mong những điều ngọt ngào nhất luôn đến với cậu!"
+  </div>
+    <div class="poem">
+    Đây là lí do mà dương học html đó
+    Là để một ngày được code tặng T
+    <h2 class = "date">~những dòng này đc viết vào ngày 30/5/2025~</h2>
+  </div>
+
+
+
+  </div>
+    <div class="gift-box">
+    <p>Nhấp vào món quà nhỏ này để mở bất ngờ 🎁</p>
+    <a href="https://www.youtube.com/watch?v=Wu8NeFXaoOc" target="_blank">
+      <img class="gift-img" src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="gift">
+    </a>
+  </div>
+
+
+  <div class="signature">- Tn Huyền Trang -</div>
+  <style>
+    .date{
+        font-size : 12px;
+    }
+  </style>
+
+  <script>
+    const canvas = document.getElementById("fireworks");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    class Particle {
+      constructor(x, y, dx, dy, color) {
+        this.x = x;
+        this.y = y;
+        this.dx = dx;
+        this.dy = dy;
+        this.alpha = 1;
+        this.color = color;
+      }
+
+      update() {
+        this.x += this.dx;
+        this.y += this.dy;
+        this.dy += 0.015;
+        this.alpha -= 0.006;
+      }
+
+      draw() {
+        ctx.globalAlpha = this.alpha;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 2.2, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    let particles = [];
+
+    function createFirework(x, y) {
+      const colors = ['#ffc0cb', '#ffe4e1', '#fae1dd', '#f8edeb', '#ffcad4'];
+      for (let i = 0; i < 70; i++) {
+        const angle = Math.random() * 2 * Math.PI;
+        const speed = Math.random() * 2.5 + 0.5;
+        const dx = Math.cos(angle) * speed;
+        const dy = Math.sin(angle) * speed;
+        particles.push(new Particle(x, y, dx, dy, colors[Math.floor(Math.random() * colors.length)]));
+      }
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      ctx.fillStyle = "rgba(255, 240, 245, 0.08)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach((p, index) => {
+        p.update();
+        p.draw();
+        if (p.alpha <= 0) {
+          particles.splice(index, 1);
+        }
+      });
+    }
+
+    animate();
+
+    setInterval(() => {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height / 2;
+      createFirework(x, y);
+    }, 1600);
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
