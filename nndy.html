@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng Sinh Nhật Trang Meow-tastic!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Pangolin&display=swap'); /* Font chữ ngộ nghĩnh */
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #E6E0F8; /* Tím lavender rất nhạt làm nền */
+            /* Thêm họa tiết chân mèo mờ */
+            background-image:
+                radial-gradient(circle at 10px 10px, rgba(186, 166, 222, 0.1) 3px, transparent 3.5px),
+                radial-gradient(circle at 40px 40px, rgba(186, 166, 222, 0.1) 3px, transparent 3.5px),
+                radial-gradient(circle at 25px 30px, rgba(186, 166, 222, 0.1) 2px, transparent 2.5px),
+                radial-gradient(circle at 20px 45px, rgba(186, 166, 222, 0.1) 2px, transparent 2.5px),
+                radial-gradient(circle at 30px 45px, rgba(186, 166, 222, 0.1) 2px, transparent 2.5px);
+            background-size: 60px 60px;
+            color: #4A3F6B; /* Tím đậm hơn cho chữ */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px 35px 40px 35px;
+            border-radius: 30px; /* Bo tròn nhiều hơn nữa */
+            box-shadow: 0 10px 30px rgba(120, 90, 150, 0.25);
+            max-width: 500px;
+            width: 100%;
+            position: relative; /* Để thêm tai mèo */
+            border: 3px solid #D1C4E9; /* Viền tím nhạt */
+        }
+
+        /* Tai mèo CSS */
+        .container::before,
+        .container::after {
+            content: '';
+            position: absolute;
+            top: -20px; /* Điều chỉnh vị trí tai mèo */
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 40px solid #D1C4E9; /* Màu tai mèo giống viền */
+            transform-origin: center bottom;
+        }
+
+        .container::before { /* Tai trái */
+            left: 40px;
+            transform: rotate(-35deg);
+        }
+
+        .container::after { /* Tai phải */
+            right: 40px;
+            transform: rotate(35deg);
+        }
+        /* Lớp phủ cho tai mèo để có màu nền container */
+        .ear-cover-left, .ear-cover-right {
+            content: '';
+            position: absolute;
+            top: -17px;
+            width: 0;
+            height: 0;
+            border-left: 27px solid transparent;
+            border-right: 27px solid transparent;
+            border-bottom: 36px solid rgba(255, 255, 255, 0.95); /* Màu nền container */
+            z-index: 1;
+        }
+        .ear-cover-left {
+            left: 41.5px; /* Căn chỉnh kỹ */
+            transform: rotate(-35deg);
+        }
+         .ear-cover-right {
+            right: 41.5px; /* Căn chỉnh kỹ */
+            transform: rotate(35deg);
+        }
+
+
+        h1 {
+            font-family: 'Pangolin', cursive; /* Font chữ vui nhộn, hợp chủ đề mèo */
+            color: #8A2BE2; /* BlueViolet - Tím đậm nổi bật */
+            font-size: 2.6em;
+            margin-top: 30px; /* Chừa không gian cho tai mèo */
+            margin-bottom: 15px;
+            animation: bounceText 1.5s ease-in-out infinite alternate;
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #5A4F7A; /* Màu chữ tím dịu hơn */
+        }
+
+        .cat-gif {
+            width: 150px; /* Kích thước mèo GIF */
+            height: auto;
+            margin: 10px auto 20px;
+            display: block;
+            border-radius: 15px; /* Bo góc cho ảnh mèo */
+            animation: gentleShake 2.5s infinite;
+        }
+
+        .button {
+            display: inline-block;
+            background: linear-gradient(45deg, #AB87FF, #C9A0DC); /* Gradient tím xinh xắn */
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px; /* Nút tròn như cục len */
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+            border: none;
+        }
+
+        .button:hover {
+            transform: scale(1.05) rotate(2deg); /* Lắc nhẹ khi hover */
+            box-shadow: 0 8px 20px rgba(138, 43, 226, 0.4);
+        }
+
+        .cat-paws {
+            font-size: 1.5em;
+            color: #BEAEE2; /* Màu dấu chân mèo */
+            margin-top: 15px;
+        }
+
+        /* Animation Keyframes */
+        @keyframes bounceText {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-5px); }
+        }
+
+        @keyframes gentleShake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-2deg); }
+            75% { transform: rotate(2deg); }
+        }
+
+
+        /* Confetti - Hình tròn với màu sắc mèo */
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            opacity: 0.9;
+            animation: fallCat linear infinite;
+        }
+
+        /* Màu sắc confetti theo chủ đề mèo và tím */
+        .confetti.p1 { background-color: #D8BFD8; } /* Thistle */
+        .confetti.p2 { background-color: #E6E6FA; } /* Lavender */
+        .confetti.p3 { background-color: #FFC0CB; } /* Pink (màu mũi mèo) */
+        .confetti.p4 { background-color: #B0C4DE; } /* LightSteelBlue (mắt mèo) */
+        .confetti.p5 { background-color: #FFE4B5; } /* Moccasin (màu lông mèo kem) */
+
+
+        @keyframes fallCat {
+            to {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<style>
+    .music {
+      margin-top: 20px;
+      opacity: 0.8;
+
+    }
+</style>
+    <div class="container">
+        <div class="ear-cover-left"></div> <div class="ear-cover-right"></div> <h1>Meow-ry Birthday Trang! 😺</h1>
+        <p>
+            Chúc Trang một ngày sinh nhật thật <span style="color: #9370DB; font-weight:bold;">purr-fect</span> và tràn ngập niềm vui!
+            Mong mọi điều <span style="color: #9370DB; font-weight:bold;">meow-racle</span> (diệu kỳ) sẽ đến với bạn trong tuổi mới.
+            Luôn đáng yêu, lanh lợi và "chanh sả" như một cô mèo nhé!
+        </p>
+        <p class="cat-paws">
+            🐾💜🐾💜🐾
+        </p>
+        <a href="#" class="button" id="specialMessageBtn">Nhận Lời Chúc Từ Boss! 😼app/menu</a>
+    </div>
+
+    <script>
+        function createConfetti() {
+            const confettiContainer = document.body;
+            const colors = ['p1', 'p2', 'p3', 'p4', 'p5']; // Các lớp màu đã định nghĩa
+
+            for (let i = 0; i < 100; i++) { // Số lượng confetti
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                const randomColorClass = colors[Math.floor(Math.random() * colors.length)];
+                confetti.classList.add(randomColorClass); // Thêm lớp màu
+
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = Math.random() * -30 + 'vh'; // Xuất phát từ cao hơn
+                confetti.style.animationDuration = (Math.random() * 3 + 4) + 's'; // Thời gian rơi
+                confetti.style.animationDelay = Math.random() * 2.5 + 's';
+                const size = Math.random() * 4 + 6; // Kích thước 6-10px
+                confetti.style.width = size + 'px';
+                confetti.style.height = size + 'px';
+
+                confettiContainer.appendChild(confetti);
+
+                // Tự xóa sau khi rơi xong
+                confetti.addEventListener('animationend', () => {
+                    if (confetti.parentNode) {
+                        confetti.remove();
+                    }
+                });
+            }
+        }
+
+        window.onload = function() {
+            createConfetti();
+            setInterval(createConfetti, 9000); // Tạo confetti định kỳ
+        };
+
+        const specialMessageBtn = document.getElementById('specialMessageBtn');
+        specialMessageBtn.addEventListener('click', function(event) {
+            event.preventDefault();
+            alert("Meo meo!! Chúc mừng sinh nhật iu dấu của tui! Mau mang pate ra đây nào! 😺😺😺");
+        });
+    </script>
+</body>
+</html>
