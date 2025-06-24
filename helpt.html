@@ -1,61 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title >Error 404</title>
+    <title>ERROR 404</title>
     <style>
         body {
-            font-family: sans-serif;
-            background-color: #f4f4f4;
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+            font-family: monospace;
+            color: #00ff00;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
+            min-height: 100vh;
         }
 
-        .error-container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .error-code {
-            font-size: 7em;
-            color: #e74c3c;
-            margin-bottom: 10px;
-        }
-
-        .error-message {
-            font-size: 1.5em;
-            color: #333;
+        #error-message {
+            font-size: 5em;
             margin-bottom: 20px;
+            text-align: center;
+            color : white;
         }
 
-        .button {
-            background-color: #3498db;
-            color: white;
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        button {
             padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
             font-size: 1em;
+            cursor: pointer;
+            background-color: #222;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
 
-        .button:hover {
-            background-color: #2980b9;
+        button:hover {
+            background-color: #00ff00;
+            color: #000;
         }
     </style>
 </head>
 <body>
-    <div class="error-container">
-        <div class="error-code">404</div>
-        <div class="error-message">Bạn đang quá mệt mỏi vì tôi phải không?</div>
-        <a href="https://www.youtube.com/watch?v=XvQxIsz30rE&list=RDXvQxIsz30rE&start_radio=1" > Bấm vào đây để hết quá tải </a>
-    </div>
+    <div id="error-message">ERROR 404</div>
+    <canvas id="matrix"></canvas>
+    <button onclick="window.location.href=' https://www.youtube.com/watch?v=XvQxIsz30rE&list=RDXvQxIsz30rE&index=1'">bạn đang quá mệt vì tôi ? hãy bấm vào đây để hết!</button>
+
+    <script>
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+
+        for (let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00ff00';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 30);
+    </script>
 </body>
 </html>
