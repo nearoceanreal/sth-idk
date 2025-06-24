@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F5 Bờ Hồ - Quán Nước & Đồ Ăn Tuyệt Vời</title>
+    <style>
+        /* CSS tích hợp */
+        :root {
+            --primary-color: #ff6f61; /* Màu chủ đạo */
+            --secondary-color: #4a4a4a; /* Màu chữ phụ */
+            --light-bg: #f8f8f8; /* Nền sáng */
+            --dark-bg: #333; /* Nền tối */
+            --text-light: #fff; /* Chữ sáng */
+            --text-dark: #333; /* Chữ tối */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        /* Header */
+        header {
+            background: var(--dark-bg);
+            color: var(--text-light);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        header nav ul li {
+            margin-left: 20px;
+        }
+
+        header nav ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        header nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--text-light);
+            background: url('https://via.placeholder.com/1920x1080/ff6f61/ffffff?text=F5+Bo+Ho+Hero+Image') no-repeat center center/cover;
+            background-attachment: fixed; /* Parallax effect */
+            margin-top: 60px; /* Offset for fixed header */
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Overlay */
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+        }
+
+        .hero h2 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #e05e50;
+            transform: translateY(-3px);
+        }
+
+        /* Section Styling */
+        section {
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            z-index: 1; /* For layering effect */
+        }
+
+        section:nth-of-type(even) {
+            background-color: var(--light-bg);
+        }
+
+        section h3 {
+            font-size: 3rem;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        section h3::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        #about p {
+            max-width: 800px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--secondary-color);
+        }
+
+        /* Menu Section */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .menu-item {
+            background: var(--text-light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--light-bg);
+        }
+
+        .menu-item-content {
+            padding: 20px;
+        }
+
+        .menu-item h4 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .menu-item p {
+            font-size: 0.95rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .menu-item .price {
+            font-weight: bold;
+            color: var(--dark-bg);
+            font-size: 1.2rem;
+        }
+
+        /* Gallery Section */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Lucky Spin Section */
+        #lucky-spin {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 80px 0;
+        }
+
+        #lucky-spin h3 {
+            color: var(--text-light);
+        }
+        #lucky-spin h3::after {
+             background-color: var(--text-light);
+        }
+
+
+        .spin-container {
+            width: 350px;
+            height: 350px;
+            margin: 40px auto;
+            border: 5px solid var(--text-light);
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            background-color: #ffe0b2; /* Lighter background for segments */
+        }
+
+        .wheel {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: transform 4s cubic-bezier(0.2, 0.9, 0.3, 1); /* Slower, more natural spin */
+        }
+
+        .segment {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            top: 0;
+            left: 25%;
+            transform-origin: bottom center;
+            background-color: rgba(255,255,255,0.8);
+            border: 1px solid rgba(0,0,0,0.1);
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%); /* Triangle shape */
+            transform: rotate(calc(var(--angle) * 1deg));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-bg);
+            font-weight: bold;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .segment span {
+            transform: rotate(calc(90deg + var(--angle) * -1deg)) translateY(-70px); /* Adjust text position and rotation */
+            display: block;
+            width: 100%;
+        }
+
+        /* Specific segment colors */
+        .segment:nth-child(1) { background-color: #ffccbc; } /* Prize 1 */
+        .segment:nth-child(2) { background-color: #ffecb3; } /* Prize 2 */
+        .segment:nth-child(3) { background-color: #c8e6c9; } /* Prize 3 */
+        .segment:nth-child(4) { background-color: #bbdefb; } /* Prize 4 */
+        .segment:nth-child(5) { background-color: #e1bee7; } /* Prize 5 */
+        .segment:nth-child(6) { background-color: #ffccbc; } /* Prize 6 */
+        .segment:nth-child(7) { background-color: #ffecb3; } /* Prize 7 */
+        .segment:nth-child(8) { background-color: #c8e6c9; } /* Prize 8 */
+
+
+        .pointer {
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 30px solid var(--dark-bg);
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+        }
+
+        .spin-controls {
+            margin-top: 30px;
+        }
+
+        #phoneInput {
+            padding: 12px 15px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            width: 250px;
+            font-size: 1rem;
+        }
+
+        #spinButton {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            border: none;
+            cursor: pointer;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        #spinButton:hover {
+            background-color: #555;
+        }
+
+        #spinButton:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--text-light);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-bg);
+            color: var(--text-light);
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        .social-links a {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            margin: 0 10px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            header nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            header nav ul li {
+                margin: 5px 10px;
+            }
+
+            .hero h2 {
+                font-size: 2.8rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            section h3 {
+                font-size: 2.2rem;
+            }
+
+            .menu-grid, .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            #phoneInput {
+                width: 80%;
+                margin-bottom: 10px;
+            }
+            #spinButton {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>F5 Bờ Hồ</h1>
+            <nav>
+                <ul>
+                    <li><a href="#home">Trang chủ</a></li>
+                    <li><a href="#about">Về chúng tôi</a></li>
+                    <li><a href="#menu">Thực đơn</a></li>
+                    <li><a href="#gallery">Thư viện</a></li>
+                    <li><a href="#lucky-spin">Vòng quay may mắn</a></li>
+                    <li><a href="#contact">Liên hệ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h2>F5 Bờ Hồ - Nơi Tái Tạo Năng Lượng</h2>
+                <p>Thưởng thức đồ uống và món ăn ngon bên bờ hồ lộng gió.</p>
+                <a href="#menu" class="btn">Khám phá Thực đơn</a>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="container">
+                <h3>Về Chúng Tôi</h3>
+                <p>Chào mừng bạn đến với F5 Bờ Hồ, điểm đến lý tưởng để bạn thư giãn và tận hưởng những khoảnh khắc tuyệt vời. Chúng tôi tự hào mang đến không gian thoáng đãng, ấm cúng cùng với thực đơn đa dạng từ các loại đồ uống giải khát đến những món ăn nhẹ hấp dẫn. Với vị trí đắc địa bên bờ hồ, F5 Bờ Hồ là nơi lý tưởng để bạn hẹn hò, gặp gỡ bạn bè hay đơn giản chỉ là tìm một góc bình yên cho riêng mình. Hãy đến và trải nghiệm sự khác biệt!</p>
+                <img src="https://via.placeholder.com/800x450/4a4a4a/ffffff?text=About+Us+Image" alt="About Us" style="width: 100%; max-width: 600px; border-radius: 10px; margin-top: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+            </div>
+        </section>
+
+        <section id="menu">
+            <div class="container">
+                <h3>Thực Đơn Đặc Sắc</h3>
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <img src="https://via.placeholder.com/400x200/ff6f61/ffffff?text=Coffee" alt="Cà phê">
+                        <div class="menu-item-content">
+                            <h4>Cà phê truyền thống</h4>
+                            <p>Hương vị đậm đà, thơm lừng, đánh thức mọi giác quan.</p>
+                            <span class="price">35.000 VNĐ</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <img src="https://via.placeholder.com/400x200/4a4a4a/ffffff?text=Tea" alt="Trà trái cây">
+                        <div class="menu-item-content">
+                            <h4>Trà trái cây nhiệt đới</h4>
+                            <p>Sảng khoái với vị chua ngọt tự nhiên từ trái cây tươi.</p>
+                            <span class="price">45.000 VNĐ</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <img src="https://via.placeholder.com/400x200/ff6f61/ffffff?text=Smoothie" alt="Smoothie">
+                        <div class="menu-item-content">
+                            <h4>Smoothie Healthy</h4>
+                            <p>Sự kết hợp hoàn hảo giữa trái cây và sữa chua.</p>
+                            <span class="price">55.000 VNĐ</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <img src="https://via.placeholder.com/400x200/4a4a4a/ffffff?text=Cake" alt="Bánh ngọt">
+                        <div class="menu-item-content">
+                            <h4>Bánh Tiramisu</h4>
+                            <p>Món tráng miệng kinh điển với hương vị cà phê và cacao.</p>
+                            <span class="price">60.000 VNĐ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery">
+            <div class="container">
+                <h3>Khoảnh Khắc Tại F5 Bờ Hồ</h3>
+                <div class="gallery-grid">
+                    <div class="gallery-item"><img src="https://via.placeholder.com/400x250/ff6f61/ffffff?text=Gallery+1" alt="Gallery Image 1"></div>
+                    <div class="gallery-item"><img src="https://via.placeholder.com/400x250/4a4a4a/ffffff?text=Gallery+2" alt="Gallery Image 2"></div>
+                    <div class="gallery-item"><img src="https://via.placeholder.com/400x250/ff6f61/ffffff?text=Gallery+3" alt="Gallery Image 3"></div>
+                    <div class="gallery-item"><img src="https://via.placeholder.com/400x250/4a4a4a/ffffff?text=Gallery+4" alt="Gallery Image 4"></div>
+                    <div class="gallery-item"><img src="https://via.placeholder.com/400x250/ff6f61/ffffff?text=Gallery+5" alt="Gallery Image 5"></div>
+                    <div class="gallery-item"><img src="https://via.placeholder.com/400x250/4a4a4a/ffffff?text=Gallery+6" alt="Gallery Image 6"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="lucky-spin">
+            <div class="container">
+                <h3>Vòng Quay May Mắn</h3>
+                <p>Nhập số điện thoại để có cơ hội nhận quà hấp dẫn từ F5 Bờ Hồ!</p>
+                <p style="font-style: italic; font-size: 0.9em;">(Lưu ý: Mỗi số điện thoại chỉ được quay một lần.)</p>
+                <div class="spin-container">
+                    <div class="wheel" id="spinWheel">
+                        </div>
+                    <div class="pointer"></div>
+                </div>
+                <div class="spin-controls">
+                    <input type="tel" id="phoneInput" placeholder="Nhập số điện thoại của bạn" pattern="[0-9]{10,}" required>
+                    <button id="spinButton">Quay Ngay!</button>
+                    <p id="result"></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <h3>Liên Hệ Với Chúng Tôi</h3>
+                <p>Chúng tôi luôn sẵn lòng lắng nghe ý kiến của bạn!</p>
+                <p><strong>Địa chỉ:</strong> 123 Đường Bờ Hồ, Hoàn Kiếm, Hà Nội</p>
+                <p><strong>Điện thoại:</strong> 0987 654 321</p>
+                <p><strong>Email:</strong> info@f5boho.com</p>
+                <div style="margin-top: 30px;">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.11978255959!2d105.85050861492027!3d21.02780658599424!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab97f267a0f7%3A0xe212c41d7d06e2c!2zSOG7kyBIb8OgbiBLaeG6v20!5e0!3m2!1svi!2svn!4v1684345678901!5m2!1svi!2svn" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 F5 Bờ Hồ. Tất cả bản quyền đã được bảo hộ.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            </div>
+            <p>Thiết kế bởi Đội ngũ F5.</p>
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        // JavaScript tích hợp
+        document.addEventListener('DOMContentLoaded', () => {
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('nav ul li a').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // --- Lucky Spin Logic ---
+            const spinWheel = document.getElementById('spinWheel');
+            const spinButton = document.getElementById('spinButton');
+            const phoneInput = document.getElementById('phoneInput');
+            const resultDisplay = document.getElementById('result');
+
+            // Sample prizes (you can customize these)
+            const prizes = [
+                { text: "Miễn phí 1 ly cà phê", weight: 30 },
+                { text: "Giảm 10% tổng hóa đơn", weight: 25 },
+                { text: "Miễn phí 1 bánh ngọt", weight: 20 },
+                { text: "Voucher 50K", weight: 15 },
+                { text: "Thử lại lần sau", weight: 10 },
+                { text: "Miễn phí 1 trà trái cây", weight: 5 },
+                { text: "Giảm 20% tổng hóa đơn", weight: 5 },
+                { text: "Voucher 100K", weight: 2 }
+            ];
+
+            // Normalize weights to create probabilities
+            const totalWeight = prizes.reduce((sum, p) => sum + p.weight, 0);
+            let currentAngle = 0; // Keep track of current rotation
+
+            function createWheelSegments() {
+                const numSegments = prizes.length;
+                const segmentAngle = 360 / numSegments;
+                spinWheel.innerHTML = ''; // Clear previous segments
+
+                prizes.forEach((prize, index) => {
+                    const segment = document.createElement('div');
+                    segment.className = 'segment';
+                    segment.style.setProperty('--angle', index * segmentAngle);
+                    segment.style.transform = `rotate(${index * segmentAngle}deg) skewY(${90 - segmentAngle}deg)`;
+
+                    const textSpan = document.createElement('span');
+                    textSpan.textContent = prize.text;
+                    textSpan.style.transform = `skewY(${-(90 - segmentAngle)}deg) rotate(${-segmentAngle / 2}deg)`; /* Counter-skew and rotate for text */
+                    segment.appendChild(textSpan);
+
+                    // Add unique colors for better visual distinction (optional)
+                    const colors = ['#ffccbc', '#ffecb3', '#c8e6c9', '#bbdefb', '#e1bee7', '#f8bbd0', '#d1c4e9', '#b2dfdb'];
+                    segment.style.backgroundColor = colors[index % colors.length];
+
+                    spinWheel.appendChild(segment);
+                });
+            }
+
+            createWheelSegments(); // Initial wheel creation
+
+            function getWinningSegment() {
+                // Select a prize based on weight
+                let random = Math.random() * totalWeight;
+                let currentWeight = 0;
+                for (let i = 0; i < prizes.length; i++) {
+                    currentWeight += prizes[i].weight;
+                    if (random < currentWeight) {
+                        return i; // Return the index of the winning prize
+                    }
+                }
+                return 0; // Fallback
+            }
+
+            // In a real application, this should be server-side
+            function hasUserSpun(phoneNumber) {
+                const spunPhones = JSON.parse(localStorage.getItem('spunPhones') || '{}');
+                return !!spunPhones[phoneNumber];
+            }
+
+            function markUserSpun(phoneNumber, prize) {
+                const spunPhones = JSON.parse(localStorage.getItem('spunPhones') || '{}');
+                spunPhones[phoneNumber] = {
+                    spunAt: new Date().toISOString(),
+                    prize: prize
+                };
+                localStorage.setItem('spunPhones', JSON.stringify(spunPhones));
+            }
+
+            spinButton.addEventListener('click', () => {
+                const phoneNumber = phoneInput.value.trim();
+                if (!/^[0-9]{10,}$/.test(phoneNumber)) {
+                    resultDisplay.textContent = "Vui lòng nhập số điện thoại hợp lệ (ít nhất 10 chữ số).";
+                    return;
+                }
+
+                if (hasUserSpun(phoneNumber)) {
+                    resultDisplay.textContent = "Số điện thoại này đã quay rồi. Mỗi số điện thoại chỉ được quay một lần!";
+                    spinButton.disabled = true; // Keep disabled if already spun
+                    return;
+                }
+
+                spinButton.disabled = true;
+                resultDisplay.textContent = "Đang quay...";
+                phoneInput.disabled = true;
+
+                const winningIndex = getWinningSegment();
+                const numSegments = prizes.length;
+                const segmentAngle = 360 / numSegments;
+                const stopAngle = 360 * 5 + (360 - (winningIndex * segmentAngle + segmentAngle / 2)); // Spin 5 full rotations + to the center of the winning segment
+
+                spinWheel.style.transition = 'transform 4s cubic-bezier(0.2, 0.9, 0.3, 1)';
+                spinWheel.style.transform = `rotate(${stopAngle}deg)`;
+
+                setTimeout(() => {
+                    spinWheel.style.transition = 'none'; // Reset transition
+                    spinWheel.style.transform = `rotate(${stopAngle % 360}deg)`; // Set to the final visual angle
+
+                    const winningPrize = prizes[winningIndex].text;
+                    resultDisplay.textContent = `Chúc mừng! Bạn đã trúng: ${winningPrize}`;
+                    markUserSpun(phoneNumber, winningPrize);
+                }, 4000); // After animation completes
+            });
+
+            // Check phone number on input change
+            phoneInput.addEventListener('input', () => {
+                const phoneNumber = phoneInput.value.trim();
+                if (/^[0-9]{10,}$/.test(phoneNumber) && !hasUserSpun(phoneNumber)) {
+                    spinButton.disabled = false;
+                    resultDisplay.textContent = "";
+                } else if (hasUserSpun(phoneNumber)) {
+                     resultDisplay.textContent = "Số điện thoại này đã quay rồi. Mỗi số điện thoại chỉ được quay một lần!";
+                     spinButton.disabled = true;
+                }
+                else {
+                    spinButton.disabled = true;
+                    resultDisplay.textContent = "";
+                }
+            });
+
+            // Initial check on load
+            if (hasUserSpun(phoneInput.value.trim())) {
+                spinButton.disabled = true;
+                resultDisplay.textContent = "Số điện thoại này đã quay rồi. Mỗi số điện thoại chỉ được quay một lần!";
+            }
+        });
+    </script>
+</body>
+</html>

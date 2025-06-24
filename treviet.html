@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<style>
+.button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #4caf50;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 13px;
+  width: 200px;
+  transition: all 0.3s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tre Việt Tourist - Khám Phá Thế Giới Xanh</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f7fa; /* Very light cyan background */
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Styles - Green Theme with Logo */
+        header {
+            background: linear-gradient(135deg, #81c784, #4caf50); /* Green gradient */
+            color: #fff;
+            padding: 20px 0; /* Reduced padding for better logo placement */
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            position: relative;
+            z-index: 10;
+            border-bottom: 5px solid #43a047; /* Darker green accent */
+            display: flex; /* Added flex to align logo and title */
+            align-items: center; /* Vertically align logo and title */
+            justify-content: center; /* Center the content */
+        }
+
+        header h1 {
+            font-size: 2.5em; /* Slightly smaller title to accommodate logo */
+            margin-bottom: 0; /* Adjust margin for alignment */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-left: 20px; /* Space between logo and title */
+        }
+
+        header p {
+            font-size: 1.2em;
+            font-style: italic;
+            color: #e8f5e9;
+        }
+
+        header .logo {
+            max-height: 70px; /* Adjust logo size as needed */
+            margin-right: 20px; /* Space between logo and title */
+        }
+
+        /* Navigation Styles - Green Accent */
+        nav {
+            background-color: #fff;
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 9;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        nav a {
+            display: inline-block;
+            padding: 12px 25px;
+            text-decoration: none;
+            color: #343a40;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+            border-radius: 5px;
+            margin: 0 10px;
+        }
+
+        nav a:hover {
+            color: #4caf50; /* Green on hover */
+            background-color: #e8f5e9;
+            transform: scale(1.05);
+        }
+
+        nav a.active {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        /* Container Styles */
+        .container {
+            max-width: 1300px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .section-title {
+            color: #4aaf4d; /* Primary green for section titles */
+            font-size: 2.6em;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #4caf50;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Tour Grid Styles */
+        .tour-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .tour-item {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tour-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .tour-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .tour-item h3 {
+            color: #4caf50; /* Green for tour titles */
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.6em;
+        }
+
+        .tour-item .price {
+            color: #d32f2f; /* Red for prices */
+            font-weight: bold;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        .tour-item .details {
+            font-size: 1em;
+            color: #000000;
+            margin-bottom: 15px;
+        }
+
+        .tour-item ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-bottom: 15px;
+        }
+
+        .tour-item ul li {
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .tour-item a.book-now {
+            display: inline-block;
+            background-color: #ffc107; /* Yellow for book now button */
+            color: #333;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .tour-item a.book-now:hover {
+            background-color: #e0a800;
+            color: #fff;
+        }
+
+        /* Study Abroad and Labor Export Styles */
+        .study-abroad-grid, .labor-export-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+        }
+
+        .study-abroad-item, .labor-export-item {
+            border: 1px solid #ddd;
+            padding: 25px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .study-abroad-item:hover, .labor-export-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 5px 5px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .study-abroad-item h3, .labor-export-item h3 {
+            color: #388e3c; /* Darker green for program titles */
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .study-abroad-item p, .labor-export-item p {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .study-abroad-item a, .labor-export-item a {
+            color: #43a047;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .study-abroad-item a:hover, .labor-export-item a:hover {
+            color: #2e7d32;
+            text-decoration: underline;
+        }
+
+        /* Contact Info Styles - Green Tint */
+        .contact-info {
+            text-align: center;
+            margin-top: 40px;
+            padding: 35px;
+            background-color: #e8f5e9; /* Light green for contact info */
+            border-radius: 10px;
+            border: 1px solid #c8e6c9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .contact-info h2 {
+            color: #388e3c;
+        }
+
+        .contact-info p {
+            margin-bottom: 15px;
+            color: #1b5e20;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .contact-info .highlight {
+            background-color: #c8e6c9;
+            color: #388e3c;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 1.4em;
+        }
+
+        /* Footer Styles - Dark Green */
+        footer {
+            background-color: #2e7d32; /* Dark green for footer */
+            color: #fff;
+            padding: 25px 0;
+            text-align: center;
+            font-size: 0.9em;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        footer a {
+            color: #e8f5e9;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #a5d6a7;
+            text-decoration: underline;
+        }
+
+        .social-links {
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 1.5em;
+            color: #e8f5e9;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #4caf50; /* Green for social icons on hover */
+            transform: scale(1.1);
+        }
+
+        /* Colorful Highlights - Green Tones */
+        h2 {
+            color: #66bb6a; /* Light green */
+        }
+
+        h3 {
+            color: #81c784; /* Slightly lighter green */
+        }
+
+        p {
+            color: #43a047; /* Darker green */
+        }
+
+        .highlight {
+            background-color: #c8e6c9; /* Very light green */
+            color: #1b5e20;
+            font-weight: bold;
+            padding: 6px;
+            border-radius: 4px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header>
+        <img src="fot_logo.jpg" alt="Logo Tre Việt Tourist" class="logo">
+        <h1>Chào mừng đến với <span class="highlight">Tre Việt Tourist</span></h1>
+    </header>
+
+    <nav>
+        <a href="#tour-noi-dia" class="active">Du Lịch Nội Địa</a>
+        <a href="#tour-quoc-te">Du Lịch Quốc Tế</a>
+        <a href="#du-hoc">Các Khóa Du Học</a>
+        <a href="#xuat-khau-lao-dong">Xuất Khẩu Lao Động</a>
+        <a href="#lien-he">Liên Hệ</a>
+    </nav>
+
+    <div class="container">
+        <section id="tour-noi-dia">
+            <h2 class="section-title">Khám Phá Vẻ Đẹp Xanh Việt Nam</h2>
+            <div class="tour-grid">
+                <div class="tour-item">
+                    <img src="hl32d.webp" alt="Vịnh Hạ Long">
+                    <h3>Tour Vịnh Hạ Long 3N2Đ - Emerald Bay</h3>
+                    <p class="price">Giá từ: <span class="highlight">2.690.000 VNĐ</span></p>
+                    <p class="details">Khám phá kỳ quan thiên nhiên thế giới với làn nước xanh ngọc bích.</p>
+                    <ul>
+                        <li>NGÀY 1: ĐIỂM HẸN - BẢO TÀNG QUẢNG NINH - HẠ LONG</li>
+                        <li>NGÀY 2: KHÁM PHÁ HẠ LONG</li>
+                        <li>NGÀY 3 HẠ LONG - ĐIỂM HẸN</li>
+                    </ul>
+                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                </div>
+                <div class="tour-item">
+                    <img src="danang43d.webp" alt="Đà Nẵng">
+                    <h3>Tour Đà Nẵng - Hội An 4N3Đ - Bãi Biển Xanh Mát</h3>
+                    <p class="price">Giá chỉ: <span class="highlight">3.550.000 VNĐ</span></p>
+                    <p class="details">Tận hưởng không gian xanh mát của biển Mỹ Khê và phố cổ Hội An.</p>
+                    <ul>
+                        <li>NGÀY 1:  ĐIỂM HẸN - ĐÀ NẴNG - BÁN ĐẢO SƠN TRÀ</li>
+                        <li>NGÀY 2: BÀ NÀ HILL (KHU DU LỊCH NÚI THẦN TÀI)</li>
+                        <li>NGÀY 3: ĐÀ NẴNG - NGŨ HÀNH SƠN - HỘI AN</li>
+                        <li>NGÀY 4: ĐÀ NẴNG - NỘI BÀI - ĐIỂM HẸN</li>
+                    </ul>
+                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                </div>
+                <div class="tour-item">
+                    <img src="phu-quoc.webp" alt="Phú Quốc">
+                    <h3>Tour Phú Quốc 4N3Đ - Hòn Đảo Xanh Ngọc</h3>
+                    <p class="price">Ưu đãi: <span class="highlight">3.690.000 VNĐ</span></p>
+                    <p class="details">Nghỉ dưỡng tại resort xanh, lặn biển ngắm san hô rực rỡ.</p>
+                    <ul>
+                        <li>NGÀY 1: ĐIỂM HẸN - PHÚ QUỐC</li>
+                        <li>NGÀY 2: PHÚ QUỐC - VINWONDERS - VINPEARL SAFARI</li>
+                        <li>NGÀY 3: KHÁM PHÁ ĐẢO NGỌC - LẶN NGẮM SAN HÔ</li>
+                        <li>NGÀY 4: PHÚ QUỐC - ĐIỂM HẸN</li>
+                    </ul>
+                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                </div>
+                <div class="tour-item">
+                    <img src="fansipan-6c89d9d4-0b71-49de-9d56-1ddef51a2443.webp" alt="Sapa">
+                    <h3>Tour Sapa 3N2Đ - Ruộng Bậc Thang Xanh Mướt</h3>
+                    <p class="price">Giá tốt: <span class="highlight">3.350.000 VNĐ</span></p>
+                    <p class="details">Ngắm nhìn vẻ đẹp xanh tươi của ruộng bậc thang, khám phá văn hóa dân tộc.</p>
+                    <ul>
+                        <li>NGÀY 1: ĐIỂM HẸN - SAPA</li>
+                        <li>NGÀY 2: SAPA - FANSIPAN - BẢN CÁT CÁT</li>
+                        <li>NGÀY 3: SAPA - ĐIỂM HẸN</li>
+                    </ul>
+                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                </div>
+                 <div class="tour-item">
+                    <img src="anh-tour-web.webp" alt="Huế">
+                    <h3>Tour Huế - Đà Nẵng 4N3Đ - di sản văn hóa</h3>
+                    <p class="price">Giá ưu đãi: <span class="highlight">3.790.000 VNĐ</span></p>
+                    <p class="details">Khám phá Đại Nội, lăng tẩm xanh mát, thưởng thức ẩm thực Huế.</p>
+                    <ul>
+                        <li>NGÀY 1: ĐÀ NẴNG - BÁN ĐẢO SƠN TRÀ - HỘI AN</li>
+                        <li>NGÀY 2: BÀ NÀ HILL - ĐƯỜNG LÊN TIÊN CẢNH</li>
+                        <li>NGÀY 3: ĐÀ NẴNG - HUẾ - CA HUẾ TRÊN SÔNG HƯƠNG</li>
+                        <li>NGÀY 4: HOÀNG THÀNH HUẾ - CHÙA THIÊN MỤ - ĐIỂM HẸN </li>
+                    </ul>
+                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                </div>
+                 <div class="tour-item">
+                    <img src="dalat.webp" alt="Đà Lạt">
+                    <h3>Tour Đà Lạt 3N3Đ - Thành Phố Ngàn Thông Xanh</h3>
+                    <p class="price">Giá hấp dẫn: <span class="highlight">3.750.000 VNĐ</span></p>
+                    <p class="details">Khám phá các địa điểm xanh tươi như Hồ Xuân Hương, Đồi Chè Cầu Đất.</p>
+                    <ul>
+                        <li>NGÀY 1: ĐIỂM HẸN - NỘI BÀI - ĐÀ LẠT</li>
+                        <li>NGÀY 2: ĐÀ LẠT - VƯỜN HOA THÀNH PHỐ</li>
+                        <li>NGÀY 3: ĐÀ LẠT THÀNH PHỐ NGÀN HOA - THUNG LŨNG TÌNH YÊU</li>
+                        <li>NGÀY 4: CHÙA LINH PHƯỚC - ĐIỂM HẸN</li>
+                    </ul>
+                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                </div>
+                 <div class="tour-item">
+                    <img src="nhatrang.webp" alt="Nha Trang">
+                    <h3>Tour Nha Trang 4N3Đ - Biển Xanh Cát Trắng</h3>
+                    <p class="price">Giá từ: <span class="highlight">3.850.000 VNĐ</span></p>
+                    <p class="details">Tắm biển Bãi Dài xanh mát, vui chơi tại VinWonders Nha Trang.</p>
+                    <ul>
+                        <li>NGÀY 1: ĐIỂM HẸN - NHA TRANG</li>
+                        <li>NGÀY 2: TOUR 3 ĐẢO VIP - LẶN NGẮM SAN HÔ</li>
+                        <li>NGÀY 3: VINWONDERS NHA TRANG</li>
+                        <li>NGÀY 4: NHA TRANG - ĐIỂM HẸN</li>
+                    </ul>
+                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                </div>
+                 <div class="tour-item">
+                    <img src="moc-chau-jpeg.webp" alt="Mộc Châu">
+                    <h3>Tour Mộc Châu 2N1Đ - Cao Nguyên Xanh Mát</h3>
+                    <p class="price">Giá chỉ: <span class="highlight">1.850.000 VNĐ</span></p>
+                    <p class="details">Ngắm hoa cải trắng, thưởng thức đặc sản xanh tươi của Tây Bắc.</p>
+                    <ul>
+                        <li> NGÀY 1: ĐIỂM HẸN - MỘC CHÂU</li>
+                        <li>NGÀY 2: MỘC CHÂU - THÁC DẢI YẾM</li>
+                    </ul>
+                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                </div>
+                 <div class="tour-item">
+                    <img src="mientay1.webp" alt="Cần Thơ">
+                    <h3>Cà Mau -Sóc Trăng - Bạc Liêu- Cần Thơ</h3> 4N3Đ - Vườn Cây Xanh</h3>
+                    <p class="price">Giá ưu đãi: <span class="highlight">3.850.000 VNĐ</span></p>
+                    <p class="details">Khám phá chợ nổi xanh tươi, vườn trái cây trĩu quả.</p>
+                    <ul>
+                        <li>NGÀY 1: ĐIỂM HẸN - CẦN THƠ - CÀ MAU</li>
+                        <li>NGÀY 2: CÀ MAU - ĐẤT MŨI - BẠC LIÊU</li>
+                        <li>NGÀY 3: BẠC LIÊU - CẦN THƠ</li>
+                        <li>NGÀY 4: CHỢ NỔI CÁI RĂNG - KDL MỸ KHÁNH - ĐIỂM HẸN</li>
+                    </ul>
+                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                </div>
+                 <div class="tour-item">
+                    <img src="pleiku-buon-ma-thuot.webp" alt="Buôn Ma Thuột">
+                    <h3>Tour pleiku - Buôn Ma Thuột </h3>
+                    <p class="details">4N3Đ - Rừng Xanh Cà Phê </p>
+                    <p class="price">Giá tốt: <span class="highlight">3.300.000 VNĐ</span></p>
+                    <ul>
+                        <li>NGÀY 1: ĐIỂM HẸN - PLEIKU</li>
+                        <li>NGÀY 2: PLEIKU - BUÔN MA THUỘT</li>
+                        <li>NGÀY 3: BUÔN ĐÔN - THÁC DRAY NUR</li>
+                        <li>NGÀY 4: BUÔN MA THUỘT - ĐIỂM HẸN</li>
+                    </ul>
+                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                </div>
+                 <div class="tour-item">
+                    <img src="download (7).jpg" alt="Hà Giang">
+                    <h3>Tour Hà Giang - Cao Bằng 4N3Đ - Cung Đường Xanh Hạnh Phúc</h3>
+                    <p class="price">Giá hấp dẫn: <span class="highlight">5.150.000 VNĐ</span></p>
+                    <p class="details">Chiêm ngưỡng vẻ đẹp hùng vĩ của đèo Mã Pí Lèng xanh ngắt.</p>
+                    <ul>
+                        <li>NGÀY 1: ĐIỂM HẸN - HÀ GIANG - QUẢN BẠ - YÊN MINH</li>
+                        <li>NGÀY 2: YÊN MINH - ĐỒNG VĂN - MÈO VẠC - BẢO LẠC</li>
+                        <li>NGÀY 3: BẢO LẠC - CAO BẰNG</li>
+                        <li>NGÀY 4: CAO BẰNG - ĐIỂM HẸN</li>
+                    </ul>
+                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                </div>
+                 <div class="tour-item">
+                    <img src="download (2).jpg" alt="Hội An">
+                    <h3>Tour Bắc Giang 1 Ngày - về miền trái ngọt</h3>
+                    <p class="price">Giá ưu đãi: <span class="highlight">650.000 VNĐ</span></p>
+                    <p class="details">Dạo bước trong lòng phố cổ xanh mướt, thưởng thức ẩm thực.</p>
+                    <ul>
+                        <li>Sáng: Điểm hẹn - Lục Ngạn Bắc Giang</li>
+                        <li>Trưa : HDV đưa quý khách đến nhà vườn Lục Ngạn</li>
+                        <li>Chiều : Di chuyển tới Khu du lịch Suối Mỡ</li>
+                        <li> Tối : di chuyển lại về điểm hẹn</li>
+                    
+                    </ul>
+                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                </div>
+            </div>
+
+
+
+        </section>
+            <button class="button" style="vertical-align:centre"><span>Xem Thêm  </span></button>
+
+        <section id="tour-quoc-te">
+            <h2 class="section-title">Vươn Mình Ra Thế Giới Xanh</h2>
+            <div class="tour-grid">
+                <div class="tour-item">
+                    <img src="download (3).jpg" alt="Thái Lan">
+                    <h3>Tour Thái Lan 5N4Đ - Xứ Sở Chùa Vàng Xanh</h3>
+                    <p class="price">Giá từ: <span class="highlight">7.990.000 VNĐ</span></p>
+                    <p class="details">Khám phá Bangkok và Pattaya xanh tươi, mua sắm thỏa thích.</p>
+                    <ul>
+                        <li>NGÀY 1: ĐIỂM HẸN - BANGKOK</li>
+                        <li>NGÀY 2: MUANG BORAN - PATTAYA - WAT PHRA YAI - ALCAZAR SHOW</li>
+                        <li>NGÀY 2: MUANG BORAN - PATTAYA - WAT PHRA YAI - ALCAZAR SHOW</li>
+                        <li>NGÀY 4: BANGKOK - WAT SAKET  - BUFFET CHAO PHRAYA PRINCESS 5*</li>
+                        <li>NGÀY 5: BANGKOK - WAT YANNAWA - ĐIỂM HẸN</li>
+                    </ul>
+                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                </div>
+                <div class="tour-item">
+                    <img src="download (4).jpg" alt="Singapore">
+                    <h3>Tour Singapore - Malaysia 5N4Đ - Thành Phố Vườn Xanh</h3>
+                    <p class="price">Giá chỉ: <span class="highlight">12.590.000 VNĐ</span></p>
+                    <p class="details">Tham quan Gardens by the Bay xanh mát, Marina Bay Sands.</p>
+                    <ul>
+                        <li>NGÀY 1: ĐIỂM HẸN - SINGAPORE</li>
+                        <li>NGÀY 2: SINGAPORE - MALAYSIA</li>
+                        <li>NGÀY 3: MALACCA - KUALA LUMPUR (MALAYSIA)</li>
+                        <li>NGÀY 4: KUALA LUMPUR - CAO NGUYÊN GENTING (MALAYSIA)</li>
+                        <li>NGÀY 5: MALAYSIA - ĐIỂM HẸN</li>
+                    </ul>
+                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                </div>
+                <div class="tour-item">
+                    <img src="download (5).jpg" alt="Nhật Bản">
+                    <h3>Tour Osaka - Kobe - Kyoto - Fuji san - Yamanshi -Tokyo 6N5Đ - Xứ Sở Mặt Trời Mọc Xanh</h3>
+                    <p class="price">Giá ưu đãi: <span class="highlight">24.990.000 VNĐ</span></p>
+                    <p class="details">Khám phá Tokyo, Osaka, Kyoto xanh tươi, ngắm hoa anh đào.</p>
+                    <ul>
+                        <li>NGÀY 1: ĐIỂM HẸN - OSAKA</li>
+                        <li>NGÀY 1: ĐIỂM HẸN - OSAKA</li>
+                        <li>NGÀY 3: OSAKA - KYOTO - NAGOYA</li>
+                        <li>NGÀY 4: NAGOYA - KAWAGUCHIKO</li>
+                        <li>NGÀY 5: KAWAGUCHI - FUJI - TOKYO</li>
+                        <li>NGÀY 6: TOKYO - ĐIỂM HẸN</li>
+                    </ul>
+                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                </div>
+                <div class="tour-item">
+                    <img src="unnamed.jpg" alt="Hàn Quốc">
+                    <h3>Tour Seoul - Nami - Everland 5N4Đ - Seoul - Jeju Xanh Mát</h3>
+                    <p class="price">Giá tốt: <span class="highlight">11.900.000 VNĐ</span></p>
+                    <p class="details">Mua sắm mỹ phẩm, khám phá Seoul và đảo Jeju xanh tươi.</p>
+                    <ul>
+                        <li>NGÀY 1: ĐIỂM HẸN - SEOUL</li>
+                        <li>NGÀY 2: SEOUL - NAMI</li>
+                        <li>NGÀY 3: SEOUL</li>
+                        <li>NGÀY 4: SEOUL - EVERLAND</li>
+                        <li>NGÀY 5: SEOUL - ĐIỂM HẸN</li>
+                    </ul>
+                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                </div>
+                 <div class="tour-item">
+                    <img src="download (6).jpg" alt="Châu Âu">
+                    <h3>Tour Châu Âu 10N9Đ - Hành Trình Xanh 4 Nước</h3>
+                    <p class="price">Giá ưu đãi: <span class="highlight">69.990.000 VNĐ</span></p>
+                    <p class="details">Tham quan các thành phố xanh tươi nổi tiếng của Châu Âu.</p>
+                    <ul>
+                        <li>NGÀY 1: ĐIỂM HẸN - PARIS</li>
+                        <li>NGÀY 2: PARIS</li>
+                        <li>NGÀY 3: PARIS</li>
+                        <li>NGÀY 4: PARIS - REIMS - COLMAR</li>
+                        <li>NGÀY 5: COLMAR - ZURICH - TITLIS - LUZERN</li>
+                        <li>NGÀY 6: LUZERN - MILAN - VENICE</li>
+                        <li>NGÀY 7: VENICE - PISA</li>
+                        <li>NGÀY 8: PISA - ROME - VATICAN</li>
+                        <li>NGÀY 9: ROME - HÀ NỘI</li>
+                        <li>NGÀY 10: HÀ NỘI - ĐIỂM HẸN</li>
+                    </ul>
+                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                </div>
+                 <div class="tour-item">
+                    <img src="unnamed (1).jpg" alt="Úc">
+                    <h3>Tour Úc 7N6Đ - Sydney - Melbourne s</h3>
+                    <p class="price">Giá tốt: <span class="highlight">51.900.000 VNĐ</span></p>
+                    <p class="details">Khám phá Sydney và Melbourne xanh tươi, Great Ocean Road.</p>
+                    <ul>
+                        <li>NGÀY 1: ĐIỂM HẸN - MELBOURNE</li>
+                        <li>NGÀY 2: MELBOURNE</li>
+                        <li>NGÀY 3: BACCHUS MARSH - BALLARAT</li>
+                        <li>NGÀY 4: MELBOURNE - CANBERRA - SYDNEY</li>
+                        <li>NGÀY 5: SYDNEY</li>
+                        <li>NGÀY 6: SYDNEY - TARONGA ZOO</li>
+                        <li>NGÀY 7: SYDNEY - ĐIỂM HẸN</li>
+                    </ul>
+                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="du-hoc">
+            <h2 class="section-title">Chắp Cánh Ước Mơ Xanh - Du Học Quốc Tế</h2>
+            <div class="study-abroad-grid">
+                <div class="study-abroad-item">
+                    <h3>Du Học Úc - Ngành Môi Trường Xanh</h3>
+                    <p>Các chương trình đào tạo về quản lý tài nguyên, bảo tồn thiên nhiên.</p>
+                    <p>Học bổng hấp dẫn, cơ hội nghiên cứu và phát triển bền vững.</p>
+                    <p>Ưu đãi có hạn 100 suất khóa học tiếng (free 100%) </p>
+                    <a href="#lien-he">Tìm hiểu thêm</a>
+                </div>
+                <div class="study-abroad-item">
+                    <h3>Du Học Canada - Ngành Nông Nghiệp Hữu Cơ Xanh</h3>
+                    <p>Các khóa học về kỹ thuật trồng trọt và chăn nuôi theo hướng bền vững.</p>
+                    <p>Chất lượng giáo dục hàng đầu, cơ hội thực hành tại các trang trại xanh.</p>
+                    <p>Ưu đãi có hạn 100 suất khóa học tiếng (free 100%) </p>
+                    <a href="#lien-he">Tìm hiểu thêm</a>
+                </div>
+                <div class="study-abroad-item">
+                    <h3>Du Học Mỹ - Ngành Công Nghệ Năng Lượng Xanh</h3>
+                    <p>Các chương trình về năng lượng tái tạo, giải pháp tiết kiệm năng lượng.</p>
+                    <p>Cơ hội nghiên cứu và phát triển công nghệ xanh tiên tiến.</p>
+                    <p>Ưu đãi có hạn 100 suất khóa học tiếng (free 100%) </p>
+                    <a href="#lien-he">Tìm hiểu thêm</a>
+                </div>
+                 <div class="study-abroad-item">
+                    <h3>Du Học Anh - Khóa Học Quản Lý Du Lịch Sinh Thái Xanh</h3>
+                    <p>Các khóa học ngắn hạn và dài hạn về quản lý du lịch bền vững.</p>
+                    <p>Nâng cao kiến thức và kỹ năng trong lĩnh vực du lịch xanh.</p>
+                    <p>Ưu đãi có hạn 100 suất khóa học tiếng (free 100%) </p>
+
+                    <a href="#lien-he">Tìm hiểu thêm</a>
+                </div>
+                 <div class="study-abroad-item">
+                    <h3>Du Học Nhật Bản - Ngành Kỹ Thuật Xây Dựng Xanh</h3>
+                    <p>Các chương trình về thiết kế và xây dựng các công trình thân thiện với môi trường.</p>
+                    <p>Cơ hội làm việc trong các dự án xây dựng xanh tại Nhật Bản.</p>
+                    <p>Ưu đãi có hạn 100 suất khóa học tiếng (free 100%) </p>
+                    <a href="#lien-he">Tìm hiểu thêm</a>
+                </div>
+                 <div class="study-abroad-item">
+                    <h3>Du Học Hàn Quốc - Ngành Khoa Học Thực Phẩm Xanh</h3>
+                    <p>Các chương trình về sản xuất và chế biến thực phẩm an toàn, bền vững.</p>
+                    <p>Nghiên cứu về các giải pháp thực phẩm xanh cho tương lai.</p>
+                    <p>Ưu đãi có hạn 100 suất khóa học tiếng (free 100%) </p>
+                    <a href="#lien-he">Tìm hiểu thêm</a>
+                </div>
+            </div>
+        </section>
+<title>Nút Xanh Lá Cây</title>
+<style>
+  .button-link {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #4CAF50; /* Màu xanh lá cây */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu mượt mà */
+    display: flex; /* Kích hoạt flexbox cho phần tử body */
+    justify-content: center; /* Căn giữa các phần tử con theo chiều ngang */
+    align-items: center; /* Tùy chọn: Căn giữa theo chiều dọc */
+    min-height: 100; /* Tùy chọn: Đảm bảo body có chiều cao tối thiểu bằng chiều cao viewport */
+    margin: 0; /* Loại bỏ margin mặc định của body */
+}
+
+  .button-link:hover {
+    background-color: #3ff045; /* Màu xanh lá cây đậm hơn khi di chuột qua */
+  }
+</style>
+
+<a href="https://www.example.com" class="button-link">Hiện thêm</a>
+
+        <section id="xuat-khau-lao-dong">
+            <h2 class="section-title">Vươn Ra Biển Lớn, Làm Chủ Tương Lai- Xuất Khẩu Lao Động</h2>
+            <div class="labor-export-grid">
+                <div class="labor-export-item">
+                    <h3>Tuyển Dụng Lao Động Nhật Bản - Ngành Nông Nghiệp Xanh</h3>
+                    <p>Làm việc tại các trang trại hữu cơ, trồng rau sạch và các loại cây xanh.</p>
+                    <p>Mức lương hấp dẫn, môi trường làm việc xanh, sạch.</p>
+                    <a href="#lien-he">Xem chi tiết</a>
+                </div>
+                <div class="labor-export-item">
+                    <h3>Tuyển Dụng Lao Động Hàn Quốc - Ngành Chế Biến Thực Phẩm Xanh</h3>
+                    <p>Làm việc tại các nhà máy chế biến thực phẩm hữu cơ và tự nhiên.</p>
+                    <p>Chương trình EPS, cơ hội làm việc ổn định và lâu dài.</p>
+                    <a href="#lien-he">Xem chi tiết</a>
+                </div>
+                <div class="labor-export-item">
+                    <h3>Tuyển Dụng Lao Động Đài Loan - Ngành Sản Xuất Vật Liệu Xanh</h3>
+                    <p>Sản xuất các vật liệu xây dựng thân thiện với môi trường.</p>
+                    <p>Chi phí xuất cảnh thấp, thu nhập ổn định, cơ hội phát triển.</p>
+                    <a href="#lien-he">Xem chi tiết</a>
+                </div>
+                 <div class="labor-export-item">
+                    <h3>Tuyển Dụng Lao Động Malaysia - Ngành Dịch Vụ Du Lịch Sinh Thái Xanh</h3>
+                    <p>Làm việc tại các khu du lịch sinh thái, resort thân thiện với môi trường.</p>
+                    <p>Môi trường làm việc năng động, cơ hội giao tiếp và học hỏi.</p>
+                    <a href="#lien-he">Xem chi tiết</a>
+                </div>
+                 <div class="labor-export-item">
+                    <h3>Tuyển Dụng Lao Động Singapore - Ngành Vận Hành Hệ Thống Xanh</h3>
+                    <p>Vận hành và bảo trì các hệ thống năng lượng tái tạo, xử lý chất thải.</p>
+                    <p>Môi trường làm việc chuyên nghiệp, cơ hội nâng cao tay nghề.</p>
+                    <a href="#lien-he">Xem chi tiết</a>
+                </div>
+                 <div class="labor-export-item">
+                    <h3>Tuyển Dụng Lao Động Châu Âu (Đức) - Ngành Kỹ Thuật Năng Lượng Xanh</h3>
+                    <p>Tham gia vào các dự án phát triển năng lượng mặt trời, điện gió.</p>
+                    <p>Mức lương cạnh tranh, cơ hội làm việc trong môi trường quốc tế.</p>
+                    <a href="#lien-he">Xem chi tiết</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="lien-he" class="contact-info">
+            <h2 id="title">Liên Hệ Với Chúng Tôi Để Biết Chi Tiết!</h2>
+            <p id= "sdt1">Hotline: <span class="highlight">081 835 9999</span></p>
+            <p id="std2">zalo : <span class="highlight">0818 35 9999</span></p>
+            <p id ="email">Email: <span class="highlight">info.dulichtreviet@gmail.com</span></p>
+            <p id = "thanks">Chúng tôi luôn sẵn lòng hỗ trợ bạn khám phá thế giới xanh!</p>
+        </section>
+    </div>
+<style>
+    #title{
+        font-size: 200%;
+        color : #1b5e20 ;
+    }
+    #sdt1{
+        font-size: 150%;
+        color:#388f53;
+    }    
+    #std2{
+        color:#388f53;
+        font-size: 150%;
+    }    
+    #email{
+        font-size: 150%;
+        color:#388f53;
+    }
+    #thanks{
+        font-size: 200%;
+
+    }
+</style>
+
+    <footer>
+        <p>© Bản quyền thuộc về Tre Việt Tourist | Cung cấp bởi Sapo</p>
+        <div class="social-links">
+            <a href="https://www.facebook.com/treviettourist.vn" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="[Đường dẫn X Corp của công ty]" target="_blank" title="X Corp"><i class="fab fa-twitter"></i></a>
+            <a href="[Đường dẫn YouTube của công ty]" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="[Đường dẫn Instagram của công ty]" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script>
+        // Basic JavaScript for highlighting the active navigation link
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('nav a');
+            const currentPath = window.location.hash || '#tour-noi-dia';
+
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            window.addEventListener('hashchange', function() {
+                const newPath = window.location.hash || '#tour-noi-dia';
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === newPath) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
