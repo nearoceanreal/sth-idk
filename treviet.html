@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
+/* Basic button style, potentially shared or overridden */
 .button {
   display: inline-block;
   border-radius: 4px;
@@ -9,12 +11,15 @@
   border: none;
   color: #FFFFFF;
   text-align: center;
-  font-size: 28px;
-  padding: 13px;
+  font-size: clamp(1.2rem, 1rem + 1vw, 1.75rem); /* Fluid font size */
+  padding: clamp(0.5rem, 0.4rem + 1vw, 0.8rem); /* Fluid padding */
   width: 200px;
   transition: all 0.3s;
   cursor: pointer;
   margin: 5px;
+  border-radius: 20px; /* From previous request */
+  box-shadow: 2px 2px 2px rgba(66, 59, 59, 0.788); /* From previous request */
+  text-decoration: none; /* Ensure no underline for button-like links */
 }
 
 .button span {
@@ -22,6 +27,7 @@
   display: inline-block;
   position: relative;
   transition: 0.5s;
+  border-radius: 20px; /* From previous request */
 }
 
 .button span:after {
@@ -41,79 +47,155 @@
   opacity: 1;
   right: 0;
 }
+
+/* Responsive grid for tour and other items */
+@media (min-width: 1024px) {
+    .tour-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .study-abroad-grid, .labor-export-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tre Việt Tourist - Khám Phá Thế Giới Xanh</title>
     <style>
+        :root {
+            --min-font: 1rem; /* 16px */
+            --max-font: 1.25rem; /* 20px */
+        }
+    
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #e0f7fa; /* Very light cyan background */
+            background-color: #e0f7fa; /* Light cyan background */
             color: #333;
             line-height: 1.6;
+            font-size: clamp(var(--min-font), 1rem + 0.5vw, var(--max-font));
         }
 
         /* Header Styles - Green Theme with Logo */
         header {
-            background: linear-gradient(135deg, #81c784, #4caf50); /* Green gradient */
+            background: linear-gradient(135deg, #81c784, #4caf50); /* Gradient xanh lá */
             color: #fff;
-            padding: 20px 0; /* Reduced padding for better logo placement */
+            padding: clamp(1rem, 2vw, 1.25rem) 0; /* Flexible padding */
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
             position: relative;
             z-index: 10;
-            border-bottom: 5px solid #43a047; /* Darker green accent */
-            display: flex; /* Added flex to align logo and title */
-            align-items: center; /* Vertically align logo and title */
-            justify-content: center; /* Center the content */
+            border-bottom: 5px solid #43a047; /* Darker green border */
+            display: flex; /* Use flex for logo and title alignment */
+            align-items: center; /* Vertically center logo and title */
+            justify-content: center; /* Horizontally center content */
+            width: 100%;
         }
 
         header h1 {
-            font-size: 2.5em; /* Slightly smaller title to accommodate logo */
-            margin-bottom: 0; /* Adjust margin for alignment */
+            font-size: clamp(1.8rem, 1.5rem + 3vw, 2.5rem); /* Flexible font size */
+            margin-bottom: 0; /* Adjust margin */
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             margin-left: 20px; /* Space between logo and title */
         }
 
         header p {
-            font-size: 1.2em;
+            font-size: clamp(1rem, 0.8rem + 1vw, 1.2rem); /* Flexible font size */
             font-style: italic;
             color: #e8f5e9;
         }
 
         header .logo {
-            max-height: 70px; /* Adjust logo size as needed */
+            max-height: clamp(50px, 10vw, 70px); /* Flexible logo size */
             margin-right: 20px; /* Space between logo and title */
+        }
+
+        /* Account Icon Styles */
+        .account-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fff;
+            text-decoration: none;
+            transition: transform 0.3s ease, color 0.3s ease, border 0.3s ease, background-color 0.3s ease; /* Added border and background for transition */
+            cursor: pointer;
+            display: flex; /* Ensure icon and text align */
+            align-items: center;
+            gap: 5px; /* Space between icon and text */
+            white-space: nowrap; /* Prevent text wrapping */
+            padding: 5px 10px; /* Padding for the frame */
+            border: 1px solid #fff; /* White border by default */
+            border-radius: 8px; /* Rounded corners for the frame */
+        }
+
+        /* Set icon size independently */
+        .account-icon i {
+            font-size: clamp(1rem, 1.5rem + 1.5vw, 2.5rem); /* Fluid size for icon */
+        }
+
+        /* Set text size independently */
+        .account-icon span {
+            font-size: clamp(0.8rem, 1vw, 1rem); /* Smaller fluid size for text */
+        }
+
+        .account-icon:hover {
+            transform: translateY(-50%) scale(1.05); /* Slightly scale on hover */
+            color: #fff; /* Set to white to prevent yellow on hover */
+            background-color: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
+        }
+
+        /* Responsive adjustments for account icon on smaller screens */
+        @media (max-width: 1299px) { /* Hide header account icon on screens <= 1299px */
+            header .account-icon {
+                display: none;
+            }
+        }
+        @media (max-width: 640px) { /* Apply these styles on screens up to 640px wide */
+            /* These rules are now largely redundant for the header icon due to the 1299px rule,
+               but kept for potential future use or if structure changes */
+            .account-icon span {
+                display: none;
+            }
+            .account-icon {
+                right: 15px;
+            }
         }
 
         /* Navigation Styles - Green Accent */
         nav {
             background-color: #fff;
-            padding: 15px 0;
+            padding: clamp(0.5rem, 2vw, 1rem) 0; /* Flexible padding */
             text-align: center;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
             z-index: 9;
             border-bottom: 2px solid #f0f0f0;
+            width : 100%;
+            transition: top 0.4s ease; /* Transition effect */
         }
 
         nav a {
             display: inline-block;
-            padding: 12px 25px;
+            padding: clamp(0.5rem, 1.5vw, 0.75rem) clamp(0.75rem, 3vw, 1.5rem); /* Flexible padding */
             text-decoration: none;
             color: #343a40;
             font-weight: 600;
             text-transform: uppercase;
             transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
             border-radius: 5px;
-            margin: 0 10px;
+            margin: 0 clamp(0.2rem, 1vw, 0.6rem); /* Flexible margin */
+            font-size: clamp(0.8rem, 0.7rem + 0.5vw, 1rem); /* Flexible font size */
         }
 
         nav a:hover {
-            color: #4caf50; /* Green on hover */
+            color: #4caf50; /* Green color on hover */
             background-color: #e8f5e9;
             transform: scale(1.05);
         }
@@ -126,35 +208,34 @@
         /* Container Styles */
         .container {
             max-width: 1300px;
-            margin: 30px auto;
-            padding: 30px;
+            margin: clamp(1.5rem, 4vw, 2rem) auto; /* Flexible margin */
+            padding: clamp(1rem, 4vw, 2rem); /* Flexible padding */
             background-color: #fff;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
         }
 
         .section-title {
-            color: #4aaf4d; /* Primary green for section titles */
-            font-size: 2.6em;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-            margin-bottom: 30px;
+            color: #000000; /* Main black color for section titles */
+            font-size: clamp(2rem, 1.5rem + 3vw, 2.6rem); /* Flexible font size */
+            margin-bottom: clamp(1.5rem, 4vw, 2rem); /* Flexible margin */
             text-align: center;
-            padding-bottom: 15px;
+            padding-bottom: clamp(0.8rem, 2vw, 1rem); /* Flexible padding */
             border-bottom: 2px solid #4caf50;
-            text-transform: uppercase;
             letter-spacing: 1px;
+            font-family: Arial,Helvetica ,sans-serif;
         }
 
         /* Tour Grid Styles */
         .tour-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Adjust minmax for better fit */
+            gap: clamp(1rem, 3vw, 1.5rem); /* Flexible gap */
         }
 
         .tour-item {
             border: 1px solid #ddd;
-            padding: 20px;
+            padding: clamp(1rem, 2.5vw, 1.25rem); /* Flexible padding */
             border-radius: 10px;
             background-color: #f9f9f9;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
@@ -175,21 +256,21 @@
         }
 
         .tour-item h3 {
-            color: #4caf50; /* Green for tour titles */
+            color: #4caf50; /* Green color for tour titles */
             margin-top: 0;
             margin-bottom: 10px;
-            font-size: 1.6em;
+            font-size: clamp(1.25rem, 1rem + 1.5vw, 1.6rem); /* Flexible font size */
         }
 
         .tour-item .price {
-            color: #d32f2f; /* Red for prices */
+            color: #d32f2f; /* Red color for price */
             font-weight: bold;
-            font-size: 1.4em;
+            font-size: clamp(1.1rem, 0.9rem + 1vw, 1.4rem); /* Flexible font size */
             margin-bottom: 15px;
         }
 
         .tour-item .details {
-            font-size: 1em;
+            font-size: clamp(0.9rem, 0.8rem + 0.5vw, 1rem); /* Flexible font size */
             color: #000000;
             margin-bottom: 15px;
         }
@@ -224,13 +305,13 @@
         /* Study Abroad and Labor Export Styles */
         .study-abroad-grid, .labor-export-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Adjust minmax */
+            gap: clamp(1rem, 4vw, 1.8rem); /* Flexible gap */
         }
 
         .study-abroad-item, .labor-export-item {
             border: 1px solid #ddd;
-            padding: 25px;
+            padding: clamp(1rem, 3vw, 1.5rem); /* Flexible padding */
             border-radius: 10px;
             background-color: #f9f9f9;
             box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.08);
@@ -246,32 +327,41 @@
             color: #388e3c; /* Darker green for program titles */
             margin-top: 0;
             margin-bottom: 15px;
-            font-size: 1.8em;
+            font-size: clamp(1.3rem, 1rem + 1.5vw, 1.8rem); /* Flexible font size */
         }
 
         .study-abroad-item p, .labor-export-item p {
-            font-size: 1.1em;
+            font-size: clamp(1rem, 0.9rem + 0.5vw, 1.1rem); /* Flexible font size */
             color: #555;
             margin-bottom: 15px;
         }
 
-        .study-abroad-item a, .labor-export-item a {
-            color: #43a047;
+        /* NEW STYLE FOR "TÌM HIỂU THÊM" AND "XEM CHI TIẾT" BUTTONS */
+        .detail-button {
+            display: inline-block;
+            padding: 10px 15px;
+            border: 2px solid #4caf50; /* Green border */
+            background-color: #e8f5e9; /* Light green background */
+            color: #2e7d32; /* Darker green text */
             text-decoration: none;
+            border-radius: 5px;
             font-weight: bold;
-            transition: color 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            font-size: clamp(0.9rem, 0.8rem + 0.5vw, 1rem); /* Flexible font size */
+            margin-top: 10px; /* Space above button */
         }
 
-        .study-abroad-item a:hover, .labor-export-item a:hover {
-            color: #2e7d32;
-            text-decoration: underline;
+        .detail-button:hover {
+            background-color: #4caf50; /* Green background on hover */
+            color: #fff; /* White text on hover */
+            border-color: #2e7d32; /* Darker green border on hover */
         }
 
         /* Contact Info Styles - Green Tint */
         .contact-info {
             text-align: center;
             margin-top: 40px;
-            padding: 35px;
+            padding: clamp(1.5rem, 5vw, 2.2rem); /* Flexible padding */
             background-color: #e8f5e9; /* Light green for contact info */
             border-radius: 10px;
             border: 1px solid #c8e6c9;
@@ -285,8 +375,8 @@
         .contact-info p {
             margin-bottom: 15px;
             color: #1b5e20;
-            font-size: 1.2em;
             font-weight: bold;
+            font-size: clamp(1rem, 0.9rem + 1vw, 1.2rem); /* Flexible font size */
         }
 
         .contact-info .highlight {
@@ -294,7 +384,33 @@
             color: #388e3c;
             padding: 8px 15px;
             border-radius: 5px;
-            font-size: 1.4em;
+            font-size: clamp(1.1rem, 0.9rem + 1vw, 1.4rem); /* Flexible font size */
+        }
+
+        /* New Account Icon in Contact Section for mobile */
+        .account-icon-mobile {
+            display: none; /* Hidden by default on large screens */
+            margin-top: 20px; /* Space from content above */
+            font-size: clamp(1.2rem, 1.5rem + 1vw, 2rem); /* Fluid size */
+            color: #388e3c; /* Green color for consistency with contact section */
+            text-decoration: none;
+            transition: transform 0.3s ease, color 0.3s ease;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center; /* Center horizontally */
+            gap: 8px; /* Space between icon and text */
+            white-space: nowrap;
+            padding: 10px 20px;
+            border: 1px solid #c8e6c9;
+            border-radius: 8px;
+            background-color: #e8f5e9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .account-icon-mobile:hover {
+            transform: scale(1.05);
+            color: #1b5e20;
+            background-color: #dcedc8;
         }
 
         /* Footer Styles - Dark Green */
@@ -336,7 +452,7 @@
         }
 
         .social-links a:hover {
-            color: #4caf50; /* Green for social icons on hover */
+            color: #4caf50; /* Green for social media icons on hover */
             transform: scale(1.1);
         }
 
@@ -360,13 +476,55 @@
             padding: 6px;
             border-radius: 4px;
         }
+        
+        /* === Responsive CSS for Mobile === */
+        @media (max-width: 767px) {
+            /* clamp() function handles font size, so we only need to change layout here */
+            .tour-grid,
+            .study-abroad-grid,
+            .labor-export-grid {
+                grid-template-columns: 1fr; /* Single column on mobile devices */
+            }
+        }
+
+        /* Show mobile account icon on screens <= 1299px */
+        @media (max-width: 1299px) {
+            .account-icon-mobile {
+                display: flex; /* Show the icon on smaller screens */
+            }
+        }
+
+        /* Further refine for very small screens for the mobile account icon */
+        @media (max-width: 640px) {
+            .account-icon-mobile span {
+                display: none; /* Hide text on very small screens */
+            }
+            .account-icon-mobile {
+                font-size: clamp(1.5rem, 1.5rem + 1vw, 2rem); /* Make icon slightly larger when text is hidden */
+                padding: 8px 15px; /* Adjust padding when text is hidden */
+            }
+        }
+
+        /* Styles for centering the "Xem Thêm" buttons */
+        .center-button-container {
+            text-align: center;
+            margin-top: 20px; /* Space above button */
+        }
+        #tai-khoan{
+            margin-right: 20px;
+        }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" xintegrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <header>
         <img src="fot_logo.jpg" alt="Logo Tre Việt Tourist" class="logo">
         <h1>Chào mừng đến với <span class="highlight">Tre Việt Tourist</span></h1>
+        <!-- Account Icon and Link (hidden on small screens) -->
+        <a href="dang-nhap.html" class="account-icon">
+            <i class="fas fa-user-circle"></i>
+            <span id = "tai-khoan">Tài khoản</span>
+        </a>
     </header>
 
     <nav>
@@ -391,7 +549,7 @@
                         <li>NGÀY 2: KHÁM PHÁ HẠ LONG</li>
                         <li>NGÀY 3 HẠ LONG - ĐIỂM HẸN</li>
                     </ul>
-                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                    <a href="#lien-he" class="book-now" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                 <div class="tour-item">
                     <img src="danang43d.webp" alt="Đà Nẵng">
@@ -404,7 +562,7 @@
                         <li>NGÀY 3: ĐÀ NẴNG - NGŨ HÀNH SƠN - HỘI AN</li>
                         <li>NGÀY 4: ĐÀ NẴNG - NỘI BÀI - ĐIỂM HẸN</li>
                     </ul>
-                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                    <a href="#lien-he" class="book-now" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                 <div class="tour-item">
                     <img src="phu-quoc.webp" alt="Phú Quốc">
@@ -417,7 +575,7 @@
                         <li>NGÀY 3: KHÁM PHÁ ĐẢO NGỌC - LẶN NGẮM SAN HÔ</li>
                         <li>NGÀY 4: PHÚ QUỐC - ĐIỂM HẸN</li>
                     </ul>
-                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                    <a href="#lien-he" class="book-now" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                 <div class="tour-item">
                     <img src="fansipan-6c89d9d4-0b71-49de-9d56-1ddef51a2443.webp" alt="Sapa">
@@ -429,7 +587,7 @@
                         <li>NGÀY 2: SAPA - FANSIPAN - BẢN CÁT CÁT</li>
                         <li>NGÀY 3: SAPA - ĐIỂM HẸN</li>
                     </ul>
-                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                    <a href="#lien-he" class="book-now" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                  <div class="tour-item">
                     <img src="anh-tour-web.webp" alt="Huế">
@@ -442,7 +600,7 @@
                         <li>NGÀY 3: ĐÀ NẴNG - HUẾ - CA HUẾ TRÊN SÔNG HƯƠNG</li>
                         <li>NGÀY 4: HOÀNG THÀNH HUẾ - CHÙA THIÊN MỤ - ĐIỂM HẸN </li>
                     </ul>
-                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                    <a href="#lien-he" class="book-now" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                  <div class="tour-item">
                     <img src="dalat.webp" alt="Đà Lạt">
@@ -455,7 +613,7 @@
                         <li>NGÀY 3: ĐÀ LẠT THÀNH PHỐ NGÀN HOA - THUNG LŨNG TÌNH YÊU</li>
                         <li>NGÀY 4: CHÙA LINH PHƯỚC - ĐIỂM HẸN</li>
                     </ul>
-                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                    <a href="#lien-he" class="book-now" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                  <div class="tour-item">
                     <img src="nhatrang.webp" alt="Nha Trang">
@@ -468,7 +626,7 @@
                         <li>NGÀY 3: VINWONDERS NHA TRANG</li>
                         <li>NGÀY 4: NHA TRANG - ĐIỂM HẸN</li>
                     </ul>
-                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                    <a href="#lien-he" class="book-now" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                  <div class="tour-item">
                     <img src="moc-chau-jpeg.webp" alt="Mộc Châu">
@@ -479,11 +637,11 @@
                         <li> NGÀY 1: ĐIỂM HẸN - MỘC CHÂU</li>
                         <li>NGÀY 2: MỘC CHÂU - THÁC DẢI YẾM</li>
                     </ul>
-                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                    <a href="#lien-he" class="book-now" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                  <div class="tour-item">
                     <img src="mientay1.webp" alt="Cần Thơ">
-                    <h3>Cà Mau -Sóc Trăng - Bạc Liêu- Cần Thơ</h3> 4N3Đ - Vườn Cây Xanh</h3>
+                    <h3>Tour Cà Mau -Sóc Trăng - Bạc Liêu- Cần Thơ 4N3Đ</h3>
                     <p class="price">Giá ưu đãi: <span class="highlight">3.850.000 VNĐ</span></p>
                     <p class="details">Khám phá chợ nổi xanh tươi, vườn trái cây trĩu quả.</p>
                     <ul>
@@ -492,12 +650,11 @@
                         <li>NGÀY 3: BẠC LIÊU - CẦN THƠ</li>
                         <li>NGÀY 4: CHỢ NỔI CÁI RĂNG - KDL MỸ KHÁNH - ĐIỂM HẸN</li>
                     </ul>
-                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                    <a href="#lien-he" class="book-now" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                  <div class="tour-item">
                     <img src="pleiku-buon-ma-thuot.webp" alt="Buôn Ma Thuột">
-                    <h3>Tour pleiku - Buôn Ma Thuột </h3>
-                    <p class="details">4N3Đ - Rừng Xanh Cà Phê </p>
+                    <h3>Tour pleiku - Buôn Ma Thuột 4N3Đ - Rừng Xanh Cà Phê</h3>
                     <p class="price">Giá tốt: <span class="highlight">3.300.000 VNĐ</span></p>
                     <ul>
                         <li>NGÀY 1: ĐIỂM HẸN - PLEIKU</li>
@@ -505,7 +662,7 @@
                         <li>NGÀY 3: BUÔN ĐÔN - THÁC DRAY NUR</li>
                         <li>NGÀY 4: BUÔN MA THUỘT - ĐIỂM HẸN</li>
                     </ul>
-                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                    <a href="#lien-he" class="book-now" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                  <div class="tour-item">
                     <img src="download (7).jpg" alt="Hà Giang">
@@ -518,10 +675,10 @@
                         <li>NGÀY 3: BẢO LẠC - CAO BẰNG</li>
                         <li>NGÀY 4: CAO BẰNG - ĐIỂM HẸN</li>
                     </ul>
-                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                    <a href="#lien-he" class="book-now" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                  <div class="tour-item">
-                    <img src="download (2).jpg" alt="Hội An">
+                    <img src="download (2).jpg" alt="Bắc Giang">
                     <h3>Tour Bắc Giang 1 Ngày - về miền trái ngọt</h3>
                     <p class="price">Giá ưu đãi: <span class="highlight">650.000 VNĐ</span></p>
                     <p class="details">Dạo bước trong lòng phố cổ xanh mướt, thưởng thức ẩm thực.</p>
@@ -532,14 +689,13 @@
                         <li> Tối : di chuyển lại về điểm hẹn</li>
                     
                     </ul>
-                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                    <a href="#lien-he" class="book-now" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
             </div>
-
-
-
         </section>
-            <button class="button" style="vertical-align:centre"><span>Xem Thêm  </span></button>
+            <div class="center-button-container">
+                <a href="#lien-he" class="button" onclick="smoothScroll(event, 'lien-he')"><span>Xem Thêm</span></a>
+            </div>
 
         <section id="tour-quoc-te">
             <h2 class="section-title">Vươn Mình Ra Thế Giới Xanh</h2>
@@ -552,11 +708,11 @@
                     <ul>
                         <li>NGÀY 1: ĐIỂM HẸN - BANGKOK</li>
                         <li>NGÀY 2: MUANG BORAN - PATTAYA - WAT PHRA YAI - ALCAZAR SHOW</li>
-                        <li>NGÀY 2: MUANG BORAN - PATTAYA - WAT PHRA YAI - ALCAZAR SHOW</li>
+                        <li>NGÀY 3: PATTAYA</li>
                         <li>NGÀY 4: BANGKOK - WAT SAKET  - BUFFET CHAO PHRAYA PRINCESS 5*</li>
                         <li>NGÀY 5: BANGKOK - WAT YANNAWA - ĐIỂM HẸN</li>
                     </ul>
-                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                    <a href="#lien-he" class="book-now" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                 <div class="tour-item">
                     <img src="download (4).jpg" alt="Singapore">
@@ -570,7 +726,7 @@
                         <li>NGÀY 4: KUALA LUMPUR - CAO NGUYÊN GENTING (MALAYSIA)</li>
                         <li>NGÀY 5: MALAYSIA - ĐIỂM HẸN</li>
                     </ul>
-                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                    <a href="#lien-he" class="book-now" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                 <div class="tour-item">
                     <img src="download (5).jpg" alt="Nhật Bản">
@@ -579,13 +735,13 @@
                     <p class="details">Khám phá Tokyo, Osaka, Kyoto xanh tươi, ngắm hoa anh đào.</p>
                     <ul>
                         <li>NGÀY 1: ĐIỂM HẸN - OSAKA</li>
-                        <li>NGÀY 1: ĐIỂM HẸN - OSAKA</li>
+                        <li>NGÀY 2: OSAKA</li>
                         <li>NGÀY 3: OSAKA - KYOTO - NAGOYA</li>
                         <li>NGÀY 4: NAGOYA - KAWAGUCHIKO</li>
                         <li>NGÀY 5: KAWAGUCHI - FUJI - TOKYO</li>
                         <li>NGÀY 6: TOKYO - ĐIỂM HẸN</li>
                     </ul>
-                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                    <a href="#lien-he" class="book-now" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                 <div class="tour-item">
                     <img src="unnamed.jpg" alt="Hàn Quốc">
@@ -599,7 +755,7 @@
                         <li>NGÀY 4: SEOUL - EVERLAND</li>
                         <li>NGÀY 5: SEOUL - ĐIỂM HẸN</li>
                     </ul>
-                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                    <a href="#lien-he" class="book-now" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                  <div class="tour-item">
                     <img src="download (6).jpg" alt="Châu Âu">
@@ -618,11 +774,11 @@
                         <li>NGÀY 9: ROME - HÀ NỘI</li>
                         <li>NGÀY 10: HÀ NỘI - ĐIỂM HẸN</li>
                     </ul>
-                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                    <a href="#lien-he" class="book-now" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                  <div class="tour-item">
                     <img src="unnamed (1).jpg" alt="Úc">
-                    <h3>Tour Úc 7N6Đ - Sydney - Melbourne s</h3>
+                    <h3>Tour Úc 7N6Đ - Sydney - Melbourne </h3>
                     <p class="price">Giá tốt: <span class="highlight">51.900.000 VNĐ</span></p>
                     <p class="details">Khám phá Sydney và Melbourne xanh tươi, Great Ocean Road.</p>
                     <ul>
@@ -634,8 +790,11 @@
                         <li>NGÀY 6: SYDNEY - TARONGA ZOO</li>
                         <li>NGÀY 7: SYDNEY - ĐIỂM HẸN</li>
                     </ul>
-                    <a href="#lien-he" class="book-now">Xem chi tiết</a>
+                    <a href="#lien-he" class="book-now" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
+            </div>
+            <div class="center-button-container">
+                <a href="#lien-he" class="button" onclick="smoothScroll(event, 'lien-he')"><span>Xem Thêm</span></a>
             </div>
         </section>
 
@@ -647,122 +806,112 @@
                     <p>Các chương trình đào tạo về quản lý tài nguyên, bảo tồn thiên nhiên.</p>
                     <p>Học bổng hấp dẫn, cơ hội nghiên cứu và phát triển bền vững.</p>
                     <p>Ưu đãi có hạn 100 suất khóa học tiếng (free 100%) </p>
-                    <a href="#lien-he">Tìm hiểu thêm</a>
+                    <a href="#lien-he" class="detail-button" onclick="smoothScroll(event, 'lien-he')">Tìm hiểu thêm</a>
                 </div>
                 <div class="study-abroad-item">
                     <h3>Du Học Canada - Ngành Nông Nghiệp Hữu Cơ Xanh</h3>
                     <p>Các khóa học về kỹ thuật trồng trọt và chăn nuôi theo hướng bền vững.</p>
                     <p>Chất lượng giáo dục hàng đầu, cơ hội thực hành tại các trang trại xanh.</p>
                     <p>Ưu đãi có hạn 100 suất khóa học tiếng (free 100%) </p>
-                    <a href="#lien-he">Tìm hiểu thêm</a>
+                    <a href="#lien-he" class="detail-button" onclick="smoothScroll(event, 'lien-he')">Tìm hiểu thêm</a>
                 </div>
                 <div class="study-abroad-item">
-                    <h3>Du Học Mỹ - Ngành Công Nghệ Năng Lượng Xanh</h3>
+                    <h3>Du Học Mỹ - Ngành Công Nghệ Năng Lượng </h3>
                     <p>Các chương trình về năng lượng tái tạo, giải pháp tiết kiệm năng lượng.</p>
                     <p>Cơ hội nghiên cứu và phát triển công nghệ xanh tiên tiến.</p>
                     <p>Ưu đãi có hạn 100 suất khóa học tiếng (free 100%) </p>
-                    <a href="#lien-he">Tìm hiểu thêm</a>
+                    <a href="#lien-he" class="detail-button" onclick="smoothScroll(event, 'lien-he')">Tìm hiểu thêm</a>
                 </div>
                  <div class="study-abroad-item">
-                    <h3>Du Học Anh - Khóa Học Quản Lý Du Lịch Sinh Thái Xanh</h3>
+                    <h3>Du Học Anh - Khóa Học Quản Lý Du Lịch Sinh Thái </h3>
                     <p>Các khóa học ngắn hạn và dài hạn về quản lý du lịch bền vững.</p>
                     <p>Nâng cao kiến thức và kỹ năng trong lĩnh vực du lịch xanh.</p>
                     <p>Ưu đãi có hạn 100 suất khóa học tiếng (free 100%) </p>
 
-                    <a href="#lien-he">Tìm hiểu thêm</a>
+                    <a href="#lien-he" class="detail-button" onclick="smoothScroll(event, 'lien-he')">Tìm hiểu thêm</a>
                 </div>
                  <div class="study-abroad-item">
-                    <h3>Du Học Nhật Bản - Ngành Kỹ Thuật Xây Dựng Xanh</h3>
+                    <h3>Du Học Nhật Bản - Ngành Kỹ Thuật Xây Dựng</h3>
                     <p>Các chương trình về thiết kế và xây dựng các công trình thân thiện với môi trường.</p>
                     <p>Cơ hội làm việc trong các dự án xây dựng xanh tại Nhật Bản.</p>
                     <p>Ưu đãi có hạn 100 suất khóa học tiếng (free 100%) </p>
-                    <a href="#lien-he">Tìm hiểu thêm</a>
+                    <a href="#lien-he" class="detail-button" onclick="smoothScroll(event, 'lien-he')">Tìm hiểu thêm</a>
+                </div>
+                 <div class="labor-export-item">
+                    <h3>Tuyển Dụng Lao Động Châu Âu (Đức) - Ngành Kỹ Thuật Năng Lượng </h3>
+                    <p>Tham gia vào các dự án phát triển năng lượng mặt trời, điện gió.</p>
+                    <p>Mức lương cạnh tranh, cơ hội làm việc trong môi trường quốc tế.</p>
+                    <a href="#lien-he" class="detail-button" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                  <div class="study-abroad-item">
-                    <h3>Du Học Hàn Quốc - Ngành Khoa Học Thực Phẩm Xanh</h3>
+                    <h3>Du Học Hàn Quốc - Ngành Khoa Học Thực Phẩm </h3>
                     <p>Các chương trình về sản xuất và chế biến thực phẩm an toàn, bền vững.</p>
                     <p>Nghiên cứu về các giải pháp thực phẩm xanh cho tương lai.</p>
                     <p>Ưu đãi có hạn 100 suất khóa học tiếng (free 100%) </p>
-                    <a href="#lien-he">Tìm hiểu thêm</a>
+                    <a href="#lien-he" class="detail-button" onclick="smoothScroll(event, 'lien-he')">Tìm hiểu thêm</a>
                 </div>
             </div>
+            <div class="center-button-container">
+                <a href="#lien-he" class="button" onclick="smoothScroll(event, 'lien-he')"><span>Xem Thêm</span></a>
+            </div>
         </section>
-<title>Nút Xanh Lá Cây</title>
-<style>
-  .button-link {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
-    text-align: center;
-    text-decoration: none;
-    color: #fff;
-    background-color: #4CAF50; /* Màu xanh lá cây */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu mượt mà */
-    display: flex; /* Kích hoạt flexbox cho phần tử body */
-    justify-content: center; /* Căn giữa các phần tử con theo chiều ngang */
-    align-items: center; /* Tùy chọn: Căn giữa theo chiều dọc */
-    min-height: 100; /* Tùy chọn: Đảm bảo body có chiều cao tối thiểu bằng chiều cao viewport */
-    margin: 0; /* Loại bỏ margin mặc định của body */
-}
-
-  .button-link:hover {
-    background-color: #3ff045; /* Màu xanh lá cây đậm hơn khi di chuột qua */
-  }
-</style>
-
-<a href="https://www.example.com" class="button-link">Hiện thêm</a>
 
         <section id="xuat-khau-lao-dong">
             <h2 class="section-title">Vươn Ra Biển Lớn, Làm Chủ Tương Lai- Xuất Khẩu Lao Động</h2>
             <div class="labor-export-grid">
                 <div class="labor-export-item">
-                    <h3>Tuyển Dụng Lao Động Nhật Bản - Ngành Nông Nghiệp Xanh</h3>
+                    <h3>Tuyển Dụng Lao Động Nhật Bản - Ngành Nông Nghiệp </h3>
                     <p>Làm việc tại các trang trại hữu cơ, trồng rau sạch và các loại cây xanh.</p>
                     <p>Mức lương hấp dẫn, môi trường làm việc xanh, sạch.</p>
-                    <a href="#lien-he">Xem chi tiết</a>
+                    <a href="#lien-he" class="detail-button" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                 <div class="labor-export-item">
-                    <h3>Tuyển Dụng Lao Động Hàn Quốc - Ngành Chế Biến Thực Phẩm Xanh</h3>
+                    <h3>Tuyển Dụng Lao Động Hàn Quốc - Ngành Chế Biến Thực Phẩm </h3>
                     <p>Làm việc tại các nhà máy chế biến thực phẩm hữu cơ và tự nhiên.</p>
                     <p>Chương trình EPS, cơ hội làm việc ổn định và lâu dài.</p>
-                    <a href="#lien-he">Xem chi tiết</a>
+                    <a href="#lien-he" class="detail-button" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                 <div class="labor-export-item">
-                    <h3>Tuyển Dụng Lao Động Đài Loan - Ngành Sản Xuất Vật Liệu Xanh</h3>
+                    <h3>Tuyển Dụng Lao Động Đài Loan - Ngành Sản Xuất Vật Liệu </h3>
                     <p>Sản xuất các vật liệu xây dựng thân thiện với môi trường.</p>
                     <p>Chi phí xuất cảnh thấp, thu nhập ổn định, cơ hội phát triển.</p>
-                    <a href="#lien-he">Xem chi tiết</a>
+                    <a href="#lien-he" class="detail-button" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                  <div class="labor-export-item">
-                    <h3>Tuyển Dụng Lao Động Malaysia - Ngành Dịch Vụ Du Lịch Sinh Thái Xanh</h3>
+                    <h3>Tuyển Dụng Lao Động Malaysia - Ngành Dịch Vụ Du Lịch Sinh Thái </h3>
                     <p>Làm việc tại các khu du lịch sinh thái, resort thân thiện với môi trường.</p>
                     <p>Môi trường làm việc năng động, cơ hội giao tiếp và học hỏi.</p>
-                    <a href="#lien-he">Xem chi tiết</a>
+                    <a href="#lien-he" class="detail-button" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                  <div class="labor-export-item">
-                    <h3>Tuyển Dụng Lao Động Singapore - Ngành Vận Hành Hệ Thống Xanh</h3>
+                    <h3>Tuyển Dụng Lao Động Singapore - Ngành Vận Hành Hệ Thống </h3>
                     <p>Vận hành và bảo trì các hệ thống năng lượng tái tạo, xử lý chất thải.</p>
                     <p>Môi trường làm việc chuyên nghiệp, cơ hội nâng cao tay nghề.</p>
-                    <a href="#lien-he">Xem chi tiết</a>
+                    <a href="#lien-he" class="detail-button" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
                  <div class="labor-export-item">
-                    <h3>Tuyển Dụng Lao Động Châu Âu (Đức) - Ngành Kỹ Thuật Năng Lượng Xanh</h3>
+                    <h3>Tuyển Dụng Lao Động Châu Âu (Đức) - Ngành Kỹ Thuật Năng Lượng </h3>
                     <p>Tham gia vào các dự án phát triển năng lượng mặt trời, điện gió.</p>
                     <p>Mức lương cạnh tranh, cơ hội làm việc trong môi trường quốc tế.</p>
-                    <a href="#lien-he">Xem chi tiết</a>
+                    <a href="#lien-he" class="detail-button" onclick="smoothScroll(event, 'lien-he')">Xem chi tiết</a>
                 </div>
+            </div>
+            <div class="center-button-container">
+                <a href="#lien-he" class="button" onclick="smoothScroll(event, 'lien-he')"><span>Xem Thêm</span></a>
             </div>
         </section>
 
         <section id="lien-he" class="contact-info">
             <h2 id="title">Liên Hệ Với Chúng Tôi Để Biết Chi Tiết!</h2>
-            <p id= "sdt1">Hotline: <span class="highlight">081 835 9999</span></p>
-            <p id="std2">zalo : <span class="highlight">0818 35 9999</span></p>
-            <p id ="email">Email: <span class="highlight">info.dulichtreviet@gmail.com</span></p>
-            <p id = "thanks">Chúng tôi luôn sẵn lòng hỗ trợ bạn khám phá thế giới xanh!</p>
+            <p id="sdt1">Hotline: <span class="highlight">081 835 9999</span></p>
+            <p id="std2">Zalo: <span class="highlight">0818 35 9999</span></p>
+            <p id="email">Email: <span class="highlight">info.dulichtreviet@gmail.com</span></p>
+            <p id="thanks">Chúng tôi luôn sẵn lòng hỗ trợ bạn khám phá thế giới xanh!</p>
+            <!-- Account Icon and Link for mobile (shown on small screens) -->
+            <a href="dang-nhap.html" class="account-icon-mobile">
+                <i class="fas fa-user-circle"></i>
+                <span>Tài khoản</span>
+            </a>
         </section>
     </div>
 <style>
@@ -786,21 +935,35 @@
         font-size: 200%;
 
     }
+    #ban-quyen{
+        color : #f3faf3;
+    }
+    #dia-chi{
+        color : #e8ebe8;
+    }
+    #giay-phep{
+        color : white;
+        font-size : 60%;
+    }
 </style>
 
     <footer>
-        <p>© Bản quyền thuộc về Tre Việt Tourist | Cung cấp bởi Sapo</p>
+        <img src="fot_logo.jpg" alt="Logo Tre Việt Tourist" class="logo">
+        <P id="dia-chi">Địa chỉ: Số 57/342 đường Khương Đình, phường Hạ Đình, quận Thanh Xuân, TP Hà Nội</P>
         <div class="social-links">
             <a href="https://www.facebook.com/treviettourist.vn" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
             <a href="[Đường dẫn X Corp của công ty]" target="_blank" title="X Corp"><i class="fab fa-twitter"></i></a>
             <a href="[Đường dẫn YouTube của công ty]" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
             <a href="[Đường dẫn Instagram của công ty]" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
             </div>
+        <p id = "ban-quyen">© Bản quyền thuộc về <strong>Tre Việt Tourist</strong> | Cung cấp bởi Sapo</p>
+        <p id ="giay-phep">Giấy phép kinh doanh dịch vụ lữ hành quốc tế số 01-1914/2022/TCDL-GP LHQT do Tổng cục Du lịch cấp ngày 5/8/2022</p>
     </footer>
+
 
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script>
-        // Basic JavaScript for highlighting the active navigation link
+        // JavaScript cơ bản để làm nổi bật liên kết điều hướng đang hoạt động
         document.addEventListener('DOMContentLoaded', function() {
             const navLinks = document.querySelectorAll('nav a');
             const currentPath = window.location.hash || '#tour-noi-dia';
@@ -824,17 +987,35 @@
                 });
             });
         });
+
+        // JavaScript để ẩn/hiện thanh mục lục khi cuộn trang
+        let lastScrollTop = 0;
+        const navbar = document.querySelector('nav');
+
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop) {
+                // Cuộn xuống -> Ẩn thanh mục lục
+                navbar.style.top = '-100px'; 
+            } else {
+                // Cuộn lên -> Hiện thanh mục lục
+                navbar.style.top = '0';
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+
+        // Hàm cuộn mượt đến phần tử mục tiêu
+        function smoothScroll(event, targetId) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ neo (chuyển trang)
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
     </script>
-
-
-
-
-
-
-
-
-
-
 
 </body>
 </html>
