@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id = 'Title'>Đăng Nhập / Đăng Ký - Tre Việt Tourist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" xintegrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        #Title {
+            color : Black;
+            font-size: 100%;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e0f7fa; /* Light cyan background */
+        }
+        /* Custom styles for the login/register form */
+        .login-form-container {
+            max-width: 480px;
+            margin: 40px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .tab-button {
+            padding: 1rem 0;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            font-weight: 600;
+            color: #6b7280; /* Gray-500 */
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            color: #4caf50; /* Green-500 */
+            border-color: #4caf50;
+        }
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db; /* Gray-300 */
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #4caf50; /* Green-500 */
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2); /* Green-500 with alpha */
+        }
+        .submit-button {
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            background-color: #4caf50; /* Green-500 */
+            color: #fff;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .submit-button:hover {
+            background-color: #43a047; /* Green-600 */
+        }
+        .social-button {
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+        .social-button i {
+            margin-right: 0.5rem;
+        }
+        .facebook-button {
+            background-color: #3b5998; /* Facebook Blue */
+            color: #fff;
+        }
+        .facebook-button:hover {
+            background-color: #2d4373;
+        }
+        .google-button {
+            background-color: #dd4b39; /* Google Red */
+            color: #fff;
+        }
+        .google-button:hover {
+            background-color: #c23321;
+        }
+        /* Adjusted logo size for this page */
+        .header-logo {
+            max-height: 80px; /* Increased size for logo on this page */
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <header class="bg-gradient-to-br from-green-400 to-green-600 text-white py-4 text-center shadow-lg flex items-center justify-center rounded-b-xl">
+        <img src="fot_logo.jpg" alt="Logo Tre Việt Tourist" class="header-logo mr-4 rounded-full"> <!-- Removed shadow-md -->
+        <h1 class="text-3xl sm:text-4xl font-bold drop-shadow-md">Tre Việt Tourist</h1>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center p-4">
+        <div class="login-form-container">
+            <div class="flex border-b border-gray-200">
+                <button id="login-tab" class="flex-1 tab-button active" onclick="showTab('login')">Đăng nhập</button>
+                <button id="register-tab" class="flex-1 tab-button" onclick="showTab('register')">Đăng ký</button>
+            </div>
+
+            <div id="login-form" class="p-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Đăng nhập tài khoản</h2>
+                <form onsubmit="handleEmailLogin(event)">
+                    <div class="mb-4">
+                        <label for="login-email" class="block text-gray-700 text-sm font-bold mb-2">EMAIL*</label>
+                        <input type="email" id="login-email" class="form-input" placeholder="Nhập Địa Chỉ Email" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="login-password" class="block text-gray-700 text-sm font-bold mb-2">MẬT KHẨU*</label>
+                        <input type="password" id="login-password" class="form-input" placeholder="Nhập Mật Khẩu" required>
+                        <a href="#" class="text-sm text-green-600 hover:underline mt-2 block text-right">Quên mật khẩu?</a>
+                    </div>
+                    <button type="submit" class="submit-button font-bold text-lg rounded-xl">ĐĂNG NHẬP</button>
+                </form>
+
+                <div class="text-center text-gray-600 my-6">hoặc đăng nhập qua</div>
+                
+                <div class="flex flex-col space-y-3">
+                    <!-- Google Sign-In Button -->
+                    <!-- The div with id="g_id_onload" is for Google One Tap / Google Sign-In button -->
+                    <div id="g_id_onload"
+                         data-client_id="YOUR_GOOGLE_CLIENT_ID" data-callback="handleGoogleLogin"
+                         data-auto_prompt="false">
+                    </div>
+                    <div class="g_id_signin"
+                         data-type="standard"
+                         data-size="large"
+                         data-theme="outline"
+                         data-text="sign_in_with"
+                         data-shape="rectangular"
+                         data-logo_alignment="left"
+                         style="width: 100%;">
+                    </div>
+
+                    <!-- Facebook Login Button -->
+                    <button class="social-button facebook-button rounded-xl" onclick="handleFacebookLogin()">
+                        <i class="fab fa-facebook-f"></i> Facebook
+                    </button>
+                </div>
+            </div>
+
+            <div id="register-form" class="p-8 hidden">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Đăng ký tài khoản mới</h2>
+                <form onsubmit="handleEmailRegister(event)">
+                    <div class="mb-4">
+                        <label for="register-email" class="block text-gray-700 text-sm font-bold mb-2">EMAIL*</label>
+                        <input type="email" id="register-email" class="form-input" placeholder="Nhập Địa Chỉ Email" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="register-password" class="block text-gray-700 text-sm font-bold mb-2">MẬT KHẨU*</label>
+                        <input type="password" id="register-password" class="form-input" placeholder="Nhập Mật Khẩu" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="confirm-password" class="block text-gray-700 text-sm font-bold mb-2">XÁC NHẬN MẬT KHẨU*</label>
+                        <input type="password" id="confirm-password" class="form-input" placeholder="Xác Nhận Mật Khẩu" required>
+                    </div>
+                    <button type="submit" class="submit-button font-bold text-lg rounded-xl">ĐĂNG KÝ</button>
+                </form>
+
+                <div class="text-center text-gray-600 my-6">hoặc đăng ký qua</div>
+                
+                <div class="flex flex-col space-y-3">
+                    <!-- Google Sign-Up Button (same as login, Google handles if user exists) -->
+                    <div id="g_id_onload_register"
+                         data-client_id="YOUR_GOOGLE_CLIENT_ID" data-callback="handleGoogleLogin"
+                         data-auto_prompt="false">
+                    </div>
+                    <div class="g_id_signin"
+                         data-type="standard"
+                         data-size="large"
+                         data-theme="outline"
+                         data-text="signup_with" data-shape="rectangular"
+                         data-logo_alignment="left"
+                         style="width: 100%;">
+                    </div>
+
+                    <button class="social-button facebook-button rounded-xl" onclick="handleFacebookLogin()">
+                        <i class="fab fa-facebook-f"></i> Facebook
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-gray-100 p-8 mt-4 rounded-b-lg">
+                <h3 class="text-lg font-bold text-gray-700 mb-3">QUYỀN LỢI THÀNH VIÊN</h3>
+                <ul class="list-disc list-inside text-gray-600 space-y-2">
+                    <li><i class="fas fa-check-circle text-green-500 mr-2"></i> Tour chọn lọc chất lượng.</li>
+                    <li><i class="fas fa-check-circle text-green-500 mr-2"></i> Đội ngũ tư vấn chi tiết và tận tình.</li>
+                    <li><i class="fas fa-check-circle text-green-500 mr-2"></i> Nhận nhiều chương trình ưu đãi hấp dẫn!</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-green-800 text-white py-6 text-center text-sm mt-auto rounded-t-xl shadow-inner">
+        <p class="mb-2">© Bản quyền thuộc về <strong>Tre Việt Tourist</strong> | Cung cấp bởi Sapo</p>
+        <p>Địa chỉ: Số 57/342 đường Khương Đình, phường Hạ Đình, quận Thanh Xuân, TP Hà Nội</p>
+    </footer>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v19.0&appId=YOUR_FACEBOOK_APP_ID&autoLogAppEvents=1"></script> 
+    <script>
+        // Initialize Facebook SDK (put this after the Facebook SDK script tag)
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : 'YOUR_FACEBOOK_APP_ID', // Replace with your Facebook App ID
+                cookie     : true,
+                xfbml      : true,
+                version    : 'v19.0'
+            });
+        };
+
+        // Function to switch between login and register tabs
+        function showTab(tabName) {
+            const loginTab = document.getElementById('login-tab');
+            const registerTab = document.getElementById('register-tab');
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+
+            if (tabName === 'login') {
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+            } else {
+                loginTab.classList.remove('active');
+                registerTab.classList.add('active');
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+            }
+        }
+
+        // --- Handle Email/Password Login/Register ---
+        function handleEmailLogin(event) {
+            event.preventDefault(); // Prevent default form submission
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            alert(`Đăng nhập bằng Email/Mật khẩu:\nEmail: ${email}\nMật khẩu: ${password}\n(Thông tin này cần được gửi đến Backend để xác thực!)`);
+            // TODO: Gửi email và mật khẩu đến server của bạn để xác thực
+        }
+
+        function handleEmailRegister(event) {
+            event.preventDefault(); // Prevent default form submission
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (password !== confirmPassword) {
+                alert('Mật khẩu và xác nhận mật khẩu không khớp!');
+                return;
+            }
+            alert(`Đăng ký bằng Email/Mật khẩu:\nEmail: ${email}\nMật khẩu: ${password}\n(Thông tin này cần được gửi đến Backend để tạo tài khoản!)`);
+            // TODO: Gửi email và mật khẩu đến server của bạn để tạo tài khoản mới
+        }
+
+        // --- Handle Google Login/Register (OAuth 2.0) ---
+        function handleGoogleLogin(response) {
+            // This function is called when a user signs in with Google.
+            // The 'response' object contains the ID token.
+            const id_token = response.credential;
+            console.log("Google ID Token:", id_token);
+
+            // TODO: Gửi `id_token` này đến Backend của bạn để xác minh và tạo/đăng nhập người dùng
+            alert("Đăng nhập bằng Google thành công! Token đã được gửi đến console. Vui lòng kiểm tra console (F12) để xem token.\n(Bạn cần Backend để xử lý token này!)");
+
+            // Example of sending token to your backend (requires a server endpoint)
+            /*
+            fetch('/api/auth/google', { // Replace with your backend endpoint
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ token: id_token }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Đăng nhập Google thành công qua Backend!');
+                    // Redirect or update UI
+                } else {
+                    alert('Đăng nhập Google thất bại qua Backend: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Lỗi khi gửi Google token đến backend:', error);
+                alert('Có lỗi xảy ra khi xử lý đăng nhập Google.');
+            });
+            */
+        }
+
+        // --- Handle Facebook Login/Register (OAuth 2.0) ---
+        function handleFacebookLogin() {
+            FB.login(function(response) {
+                if (response.authResponse) {
+                    console.log('Chào mừng! Đang tìm nạp thông tin của bạn.... ');
+                    console.log('Facebook Access Token:', response.authResponse.accessToken);
+                    console.log('Facebook User ID:', response.authResponse.userID);
+                    
+                    // You can also get user info like this:
+                    // FB.api('/me', {fields: 'name, email'}, function(response) {
+                    //     console.log('Good to see you, ' + response.name + '.');
+                    //     console.log('Email:', response.email);
+                    // });
+
+                    // TODO: Gửi `response.authResponse.accessToken` đến Backend của bạn để xác minh và tạo/đăng nhập người dùng
+                    alert("Đăng nhập bằng Facebook thành công! Access Token đã được gửi đến console. Vui lòng kiểm tra console (F12) để xem token.\n(Bạn cần Backend để xử lý token này!)");
+
+                    // Example of sending token to your backend (requires a server endpoint)
+                    /*
+                    fetch('/api/auth/facebook', { // Replace with your backend endpoint
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ accessToken: response.authResponse.accessToken }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Đăng nhập Facebook thành công qua Backend!');
+                            // Redirect or update UI
+                        } else {
+                            alert('Đăng nhập Facebook thất bại qua Backend: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi gửi Facebook token đến backend:', error);
+                        alert('Có lỗi xảy ra khi xử lý đăng nhập Facebook.');
+                    });
+                    */
+
+                } else {
+                    console.log('Người dùng đã hủy đăng nhập hoặc không cho phép.');
+                    alert('Đăng nhập bằng Facebook đã bị hủy hoặc không được phép.');
+                }
+            }, {scope: 'public_profile,email'}); // Request necessary permissions
+        }
+
+    </script>
+</body>
+</html>
