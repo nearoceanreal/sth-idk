@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id = 'title'>Kéo Búa Bao</title>
+    <!-- Tải Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        #title{
+
+        }
+        /* Tùy chỉnh font chữ */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fcefdc; /* Màu nền be nhạt (tông màu da) */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Container chính của trò chơi */
+        .game-container {
+            background-color: #ffffff;
+            padding: 35px;
+            border-radius: 20px; /* Bo tròn nhiều hơn */
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15); /* Bóng đổ mềm mại hơn */
+            text-align: center;
+            max-width: 550px; /* Rộng hơn một chút */
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 30px; /* Khoảng cách lớn hơn giữa các phần */
+        }
+
+        /* Tiêu đề trò chơi */
+        h1 {
+            color: #5c4033; /* Màu nâu sẫm */
+            font-size: 50px; /* Tăng kích thước tiêu đề */
+            font-weight: 700; /* Đậm hơn */
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05); /* Bóng chữ nhẹ */
+        }
+
+        /* Nút lựa chọn */
+        .choice-buttons button {
+            background-color: #d4a373; /* Màu nâu vàng nhạt (tông màu da) */
+            color: white;
+            padding: 20px 35px; /* Tăng padding để chứa icon lớn hơn */
+            border-radius: 15px; /* Bo tròn nhiều hơn */
+            font-size: 1.2rem; /* Lớn hơn */
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            border: none;
+            outline: none;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            display: flex; /* Để căn giữa icon và text */
+            align-items: center;
+            justify-content: center;
+            gap: 8px; /* Khoảng cách giữa icon và text */
+        }
+
+        .choice-buttons button:hover {
+            background-color: #c08552; /* Màu nâu vàng đậm hơn khi hover */
+            transform: translateY(-5px); /* Nhấn nhá hơn */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .choice-buttons button:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Icon trong nút lựa chọn */
+        .choice-button-icon {
+            font-size: 3.5rem; /* Tăng kích thước lớn hơn cho icon trong nút */
+            line-height: 1;
+        }
+
+        /* Hiển thị kết quả */
+        .result-display {
+            background-color: #fff8f0; /* Màu nền trắng kem */
+            padding: 25px; /* Lớn hơn */
+            border-radius: 15px; /* Bo tròn nhiều hơn */
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #5c4033;
+            line-height: 1.8; /* Khoảng cách dòng tốt hơn */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px; /* Khoảng cách giữa các phần tử */
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05); /* Bóng đổ bên trong nhẹ */
+        }
+
+        /* Icon hiển thị kết quả */
+        .choice-display-icon {
+            font-size: 8rem; /* Tăng kích thước lớn hơn cho icon hiển thị kết quả */
+            line-height: 1;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease-out;
+        }
+        .choice-display-icon.hidden {
+            display: none;
+        }
+
+        /* Điểm số */
+        .score-display {
+            font-size: 1.5rem; /* Lớn hơn */
+            font-weight: 700;
+            color: #5c4033;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #ffe0b2; /* Nền cam nhạt cho điểm số */
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Nút reset */
+        .reset-button {
+            background-color: #a0522d; /* Màu nâu đất */
+            color: white;
+            padding: 14px 25px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border: none;
+            outline: none;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .reset-button:hover {
+            background-color: #8b4513; /* Màu nâu đất đậm hơn khi hover */
+            transform: translateY(-2px);
+        }
+        #hh{
+            font-size : 50px; 
+            font-family: Georgia, serif;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+
+        <h1 id = "hh">Kéo Búa Bao</h1>
+        <div class="choice-buttons flex justify-center gap-6 flex-wrap">
+            <button id="rock" class="px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200">
+                <span class="choice-button-icon">✊</span>
+            </button>
+            <button id="paper" class="px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200">
+                <span class="choice-button-icon">✋</span> Búa
+            </button>
+            <button id="scissors" class="px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200">
+                <span class="choice-button-icon">✌️</span> Bao
+            </button>
+        </div>
+
+        <div class="result-display rounded-lg shadow-sm">
+            <div class="flex items-center justify-center gap-8 w-full">
+                <div class="flex flex-col items-center">
+                    <p id="player-choice-text" class="text-base">Bạn chọn:</p>
+                    <span id="player-choice-icon" class="choice-display-icon hidden"></span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <p id="computer-choice-text" class="text-base">Máy chọn:</p>
+                    <span id="computer-choice-icon" class="choice-display-icon hidden"></span>
+                </div>
+            </div>
+            <p id="game-result" class="font-bold text-2xl mt-2"></p>
+        </div>
+
+        <div class="score-display">
+            Điểm: <span id="player-score">0</span> - <span id="computer-score">0</span>
+        </div>
+
+        <button id="reset-game" class="reset-button">Chơi Lại</button>
+    </div>
+
+    <script>
+        // Lấy các phần tử DOM
+        const rockBtn = document.getElementById('rock');
+        const paperBtn = document.getElementById('paper');
+        const scissorsBtn = document.getElementById('scissors');
+        const playerChoiceText = document.getElementById('player-choice-text');
+        const playerChoiceIcon = document.getElementById('player-choice-icon'); // Đã đổi từ image sang icon
+        const computerChoiceText = document.getElementById('computer-choice-text');
+        const computerChoiceIcon = document.getElementById('computer-choice-icon'); // Đã đổi từ image sang icon
+        const gameResultDisplay = document.getElementById('game-result');
+        const playerScoreDisplay = document.getElementById('player-score');
+        const computerScoreDisplay = document.getElementById('computer-score');
+        const resetGameBtn = document.getElementById('reset-game');
+
+        // Khởi tạo điểm số
+        let playerScore = 0;
+        let computerScore = 0;
+
+        // Ánh xạ các lựa chọn với văn bản và biểu tượng emoji
+        const choices = {
+            'rock': { text: 'Kéo', icon: '✊' },
+            'paper': { text: 'Búa', icon: '✋' },
+            'scissors': { text: 'Bao', icon: '✌️' }
+        };
+
+        // Hàm để lấy lựa chọn của máy tính
+        function getComputerChoice() {
+            const options = ['rock', 'paper', 'scissors'];
+            const randomIndex = Math.floor(Math.random() * options.length);
+            return options[randomIndex];
+        }
+
+        // Hàm xác định người thắng cuộc
+        function determineWinner(playerChoice, computerChoice) {
+            if (playerChoice === computerChoice) {
+                return 'Hòa!';
+            } else if (
+                (playerChoice === 'rock' && computerChoice === 'scissors') ||
+                (playerChoice === 'paper' && computerChoice === 'rock') ||
+                (playerChoice === 'scissors' && computerChoice === 'paper')
+            ) {
+                playerScore++;
+                return 'Bạn thắng!';
+            } else {
+                computerScore++;
+                return 'Máy thắng!';
+            }
+        }
+
+        // Hàm cập nhật hiển thị điểm số
+        function updateScoreDisplay() {
+            playerScoreDisplay.textContent = playerScore;
+            computerScoreDisplay.textContent = computerScore;
+        }
+
+        // Hàm xử lý khi người chơi chọn
+        function playGame(playerChoice) {
+            const computerChoice = getComputerChoice();
+
+            // Cập nhật văn bản lựa chọn
+            playerChoiceText.textContent = `Bạn chọn: ${choices[playerChoice].text}`;
+            computerChoiceText.textContent = `Máy chọn: ${choices[computerChoice].text}`;
+
+            // Cập nhật biểu tượng lựa chọn
+            playerChoiceIcon.textContent = choices[playerChoice].icon;
+            playerChoiceIcon.classList.remove('hidden'); // Hiển thị biểu tượng người chơi
+
+            computerChoiceIcon.textContent = choices[computerChoice].icon;
+            computerChoiceIcon.classList.remove('hidden'); // Hiển thị biểu tượng máy tính
+
+            const result = determineWinner(playerChoice, computerChoice);
+            gameResultDisplay.textContent = result;
+
+            // Đổi màu kết quả
+            if (result === 'Bạn thắng!') {
+                gameResultDisplay.className = 'font-bold text-2xl mt-2 text-green-600';
+            } else if (result === 'Máy thắng!') {
+                gameResultDisplay.className = 'font-bold text-2xl mt-2 text-red-600';
+            } else {
+                gameResultDisplay.className = 'font-bold text-2xl mt-2 text-blue-600';
+            }
+
+            updateScoreDisplay();
+        }
+
+        // Gán sự kiện cho các nút lựa chọn
+        rockBtn.addEventListener('click', () => playGame('rock'));
+        paperBtn.addEventListener('click', () => playGame('paper'));
+        scissorsBtn.addEventListener('click', () => playGame('scissors'));
+
+        // Gán sự kiện cho nút chơi lại
+        resetGameBtn.addEventListener('click', () => {
+            playerScore = 0;
+            computerScore = 0;
+            updateScoreDisplay();
+            playerChoiceText.textContent = 'Bạn chọn: ';
+            playerChoiceIcon.classList.add('hidden'); // Ẩn biểu tượng người chơi
+            computerChoiceText.textContent = 'Máy chọn: ';
+            computerChoiceIcon.classList.add('hidden'); // Ẩn biểu tượng máy tính
+            gameResultDisplay.textContent = '';
+            gameResultDisplay.className = 'font-bold text-2xl mt-2'; // Đặt lại màu mặc định
+        });
+
+        // Cập nhật điểm số ban đầu
+        updateScoreDisplay();
+    </script>
+</body>
+</html>
