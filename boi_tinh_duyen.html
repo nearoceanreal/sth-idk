@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Bói Tình Duyên </title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS để tạo kiểu cho trang web */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #FFF0F5 0%, #FFC0CB 100%); /* Màu nền gradient hồng nhẹ nhàng */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            color: #333;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 800px; /* Đã tăng chiều rộng tối đa của container */
+            width: 100%;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border: 1px solid #f0f0f0;
+        }
+        .container:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            color: #FF69B4; /* Màu hồng chủ đạo */
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.08);
+            font-weight: 700;
+        }
+        p {
+            font-size: 1.1em;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .input-section {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .person-input {
+            background-color: #f9f9f9;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid #eee;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+            text-align: left;
+        }
+        .person-input h2 {
+            color: #CD4A8B; /* Màu hồng đậm hơn */
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            border-bottom: 2px solid #FFB6C1; /* Viền hồng nhạt */
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+            font-size: 1em;
+        }
+        .input-row {
+            display: flex;
+            gap: 10px;
+        }
+        input[type="text"], input[type="number"] {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #dcdcdc;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước tổng */
+        }
+        input[type="text"]:focus, input[type="number"]:focus {
+            border-color: #FF69B4; /* Màu hồng chủ đạo khi focus */
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.2); /* Shadow hồng */
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        button {
+            background-color: #FF69B4; /* Màu hồng chủ đạo */
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-top: 30px;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3); /* Shadow hồng */
+        }
+        button:hover {
+            background-color: #CD4A8B; /* Màu hồng đậm hơn khi hover */
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(205, 74, 139, 0.4); /* Shadow hồng đậm hơn */
+        }
+        #result-area {
+            margin-top: 40px;
+            padding: 30px;
+            background-color: #FFF0F5; /* Nền hồng siêu nhạt */
+            border-radius: 15px;
+            border: 2px dashed #FFB6C1; /* Viền hồng nhạt */
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: left;
+            box-shadow: inset 0 0 15px rgba(255, 182, 193, 0.1); /* Shadow hồng nhạt */
+        }
+        #result-area p {
+            font-size: 1.15em;
+            color: #4a4a4a;
+            margin: 8px 0;
+        }
+        #result-area strong {
+            color: #CD4A8B; /* Màu hồng đậm hơn */
+            font-weight: 700;
+        }
+        .special-message {
+            color: #e60000;
+            font-weight: 700;
+            margin-top: 25px;
+            font-size: 1.4em;
+            animation: pulse 1.5s infinite;
+            text-shadow: 1px 1px 5px rgba(230, 0, 0, 0.3);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                border-radius: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .person-input {
+                padding: 15px;
+            }
+            .person-input h2 {
+                font-size: 1.4em;
+            }
+            .input-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            button {
+                font-size: 1.1em;
+                padding: 12px 20px;
+            }
+            #result-area {
+                padding: 20px;
+            }
+            #result-area p {
+                font-size: 1em;
+            }
+            .special-message {
+                font-size: 1.1em;
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    .cau_chao{
+        font-size : 15px;
+    }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Bói Tình Duyên</h1>
+        <p class= 'cau_chao' >Chào bạn! Lâu rồi không gặp nhỉ? Chắc cũng gần tháng rồi đó! =)))))</p>
+        <p class= 'cau_chao'>Hãy cùng xem mức độ hợp nhau của hai bạn dựa trên tên gọi và ngày sinh nhé!</p>
+
+        <div class="input-section">
+            <div class="person-input">
+                <h2>Thông tin của Nam</h2>
+                <div class="form-group">
+                    <label for="ten_nam">Tên của nam:</label>
+                    <input type="text" id="ten_nam" placeholder="VD: Giáp Đại Dương" required>
+                </div>
+                <div class="form-group">
+                    <label>Ngày tháng năm sinh:</label>
+                    <div class="input-row">
+                        <input type="number" id="day_nam" placeholder="Ngày" min="1" max="31">
+                        <input type="number" id="month_nam" placeholder="Tháng" min="1" max="12">
+                        <input type="number" id="year_nam" placeholder="Năm" min="1900" max="2100">
+                    </div>
+                </div>
+            </div>
+
+            <div class="person-input">
+                <h2>Thông tin của Nữ</h2>
+                <div class="form-group">
+                    <label for="ten_nu">Tên của nữ:</label>
+                    <input type="text" id="ten_nu" placeholder="VD:Trần Nguyễn Huyền Trang" required>
+                </div>
+                <div class="form-group">
+                    <label>Ngày tháng năm sinh:</label>
+                    <div class="input-row">
+                        <input type="number" id="day_nu" placeholder="Ngày" min="1" max="31">
+                        <input type="number" id="month_nu" placeholder="Tháng" min="1" max="12">
+                        <input type="number" id="year_nu" placeholder="Năm" min="1900" max="2100">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="boiTinhDuyen()">Bói Ngay!</button>
+
+        <div id="result-area">
+            <p>Nhập tên và ngày sinh của hai bạn, sau đó nhấn "Bói Ngay!" để xem kết quả.</p>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript để xử lý logic bói toán và tính toán ngày sinh
+        
+        // --- Hàm kiểm tra ngày hợp lệ ---
+        function isValidDate(day, month, year) {
+            if (isNaN(day) || isNaN(month) || isNaN(year) || day < 1 || month < 1 || month > 12) {
+                return false;
+            }
+            const date = new Date(year, month - 1, day);
+            return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
+        }
+
+        // --- Hàm lấy Cung Hoàng Đạo ---
+        function getZodiacSign(day, month) {
+            if (!isValidDate(day, month, 2000)) return "Không xác định"; // Năm không quan trọng cho cung hoàng đạo
+            
+            if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return "Bạch Dương";
+            if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return "Kim Ngưu";
+            if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return "Song Tử";
+            if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) return "Cự Giải";
+            if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return "Sư Tử";
+            if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return "Xử Nữ";
+            if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) return "Thiên Bình";
+            if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) return "Bọ Cạp";
+            if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) return "Nhân Mã";
+            if ((month == 12 && day >= 22) || (month == 1 && day <= 19)) return "Ma Kết";
+            if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "Bảo Bình";
+            if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return "Song Ngư";
+            return "Không xác định";
+        }
+
+        // --- Hàm lấy Con Giáp (Tuổi) ---
+        function getVietnameseZodiac(year) {
+            if (isNaN(year) || year < 0) return "Không xác định";
+            const animals = ["Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi"];
+            // Con giáp được tính dựa trên năm âm lịch, nhưng ở đây ta dùng năm dương lịch cho đơn giản
+            // Năm 1900 là Tý, năm 1901 là Sửu...
+            return animals[(year - 1900) % 12];
+        }
+
+        // --- Hàm lấy Ngũ Hành (Mệnh) ---
+        function getNguHanhElement(year) {
+            if (isNaN(year) || year < 0) return "Không xác định";
+            // Bảng tra cứu Ngũ Hành theo năm sinh (dương lịch gần đúng)
+            // Cần bảng tra cứu chi tiết hơn cho độ chính xác cao, đây là bảng rút gọn phổ biến
+            const elements = {
+                "Kim": [1932, 1933, 1940, 1941, 1954, 1955, 1962, 1963, 1970, 1971, 1984, 1985, 1992, 1993, 2000, 2001, 2014, 2015, 2022, 2023],
+                "Mộc": [1928, 1929, 1942, 1943, 1950, 1951, 1958, 1959, 1972, 1973, 1980, 1981, 1988, 1989, 2002, 2003, 2010, 2011, 2018, 2019],
+                "Thủy": [1936, 1937, 1944, 1945, 1952, 1953, 1966, 1967, 1974, 1975, 1982, 1983, 1996, 1997, 2004, 2005, 2012, 2013, 2020, 2021],
+                "Hỏa": [1934, 1935, 1948, 1949, 1956, 1957, 1964, 1965, 1978, 1979, 1986, 1987, 1994, 1995, 2006, 2007, 2016, 2017],
+                "Thổ": [1930, 1931, 1938, 1939, 1946, 1947, 1960, 1961, 1968, 1969, 1976, 1977, 1990, 1991, 1998, 1999, 2008, 2009]
+            };
+
+            for (const element in elements) {
+                if (elements[element].includes(year)) {
+                    return element;
+                }
+            }
+            // Nếu không tìm thấy trong bảng trên, tính theo công thức đơn giản (có thể không chính xác tuyệt đối)
+            // Đây là công thức phổ biến cho năm 1940 trở đi
+            const can = (year - 3) % 10; // Can (Giáp, Ất, Bính...)
+            const chi = (year - 3) % 12; // Chi (Tý, Sửu, Dần...)
+
+            const canNguHanh = {
+                0: "Kim", 1: "Kim", 2: "Thủy", 3: "Thủy", 4: "Hỏa",
+                5: "Hỏa", 6: "Thổ", 7: "Thổ", 8: "Mộc", 9: "Mộc"
+            };
+            return canNguHanh[can] || "Không xác định";
+        }
+
+        // --- Hàm đánh giá tương hợp Cung Hoàng Đạo ---
+        function getZodiacCompatibility(sign1, sign2) {
+            const compatibilities = {
+                "Bạch Dương": {"Sư Tử": "Rất hợp", "Nhân Mã": "Rất hợp", "Song Tử": "Hợp", "Bảo Bình": "Hợp"},
+                "Kim Ngưu": {"Xử Nữ": "Rất hợp", "Ma Kết": "Rất hợp", "Cự Giải": "Hợp", "Song Ngư": "Hợp"},
+                "Song Tử": {"Thiên Bình": "Rất hợp", "Bảo Bình": "Rất hợp", "Bạch Dương": "Hợp", "Sư Tử": "Hợp"},
+                "Cự Giải": {"Bọ Cạp": "Rất hợp", "Song Ngư": "Rất hợp", "Kim Ngưu": "Hợp", "Xử Nữ": "Hợp"},
+                "Sư Tử": {"Bạch Dương": "Rất hợp", "Nhân Mã": "Rất hợp", "Song Tử": "Hợp", "Thiên Bình": "Hợp"},
+                "Xử Nữ": {"Kim Ngưu": "Rất hợp", "Ma Kết": "Rất hợp", "Cự Giải": "Hợp", "Bọ Cạp": "Hợp"},
+                "Thiên Bình": {"Song Tử": "Rất hợp", "Bảo Bình": "Rất hợp", "Sư Tử": "Hợp", "Nhân Mã": "Hợp"},
+                "Bọ Cạp": {"Cự Giải": "Rất hợp", "Song Ngư": "Rất hợp", "Xử Nữ": "Hợp", "Ma Kết": "Hợp"},
+                "Nhân Mã": {"Bạch Dương": "Rất hợp", "Sư Tử": "Rất hợp", "Thiên Bình": "Hợp", "Bảo Bình": "Hợp"},
+                "Ma Kết": {"Kim Ngưu": "Rất hợp", "Xử Nữ": "Rất hợp", "Bọ Cạp": "Hợp", "Song Ngư": "Hợp"},
+                "Bảo Bình": {"Song Tử": "Rất hợp", "Thiên Bình": "Rất hợp", "Bạch Dương": "Hợp", "Nhân Mã": "Hợp"},
+                "Song Ngư": {"Cự Giải": "Rất hợp", "Bọ Cạp": "Rất hợp", "Kim Ngưu": "Hợp", "Ma Kết": "Hợp"}
+            };
+
+            if (sign1 === "Không xác định" || sign2 === "Không xác định") return "Không xác định";
+            
+            if (compatibilities[sign1] && compatibilities[sign1][sign2]) {
+                return compatibilities[sign1][sign2];
+            }
+            if (compatibilities[sign2] && compatibilities[sign2][sign1]) { // Kiểm tra cả chiều ngược lại
+                return compatibilities[sign2][sign1];
+            }
+            
+            // Nếu không có trong danh sách "Rất hợp" hoặc "Hợp", mặc định là "Bình thường"
+            return "Bình thường";
+        }
+
+        // --- Hàm đánh giá tương hợp Con Giáp (Tuổi) ---
+        function getVietnameseZodiacCompatibility(animal1, animal2) {
+            if (animal1 === "Không xác định" || animal2 === "Không xác định") return "Không xác định";
+
+            // Tam Hợp: Rất hợp
+            const tamHopGroups = [
+                ["Tỵ", "Dậu", "Sửu"],
+                ["Thân", "Tý", "Thìn"],
+                ["Dần", "Ngọ", "Tuất"],
+                ["Hợi", "Mão", "Mùi"]
+            ];
+            for (const group of tamHopGroups) {
+                if (group.includes(animal1) && group.includes(animal2) && animal1 !== animal2) {
+                    return "Rất hợp (Tam Hợp)";
+                }
+            }
+
+            // Tứ Hành Xung: Khắc
+            const tuHanhXungGroups = [
+                ["Tý", "Ngọ", "Mão", "Dậu"],
+                ["Thìn", "Tuất", "Sửu", "Mùi"],
+                ["Dần", "Thân", "Tỵ", "Hợi"]
+            ];
+            for (const group of tuHanhXungGroups) {
+                if (group.includes(animal1) && group.includes(animal2) && animal1 !== animal2) {
+                    return "Khắc (Tứ Hành Xung)";
+                }
+            }
+            
+            // Lục Hợp: Hợp
+            const lucHopPairs = {
+                "Tý": "Sửu", "Sửu": "Tý",
+                "Dần": "Hợi", "Hợi": "Dần",
+                "Mão": "Tuất", "Tuất": "Mão",
+                "Thìn": "Dậu", "Dậu": "Thìn",
+                "Tỵ": "Thân", "Thân": "Tỵ",
+                "Ngọ": "Mùi", "Mùi": "Ngọ"
+            };
+            if (lucHopPairs[animal1] === animal2) {
+                return "Hợp (Lục Hợp)";
+            }
+
+            // Lục Hại: Khắc
+            const lucHaiPairs = {
+                "Tý": "Mùi", "Mùi": "Tý",
+                "Sửu": "Ngọ", "Ngọ": "Sửu",
+                "Dần": "Tỵ", "Tỵ": "Dần",
+                "Mão": "Thìn", "Thìn": "Mão",
+                "Thân": "Hợi", "Hợi": "Thân",
+                "Dậu": "Tuất", "Tuất": "Dậu"
+            };
+            if (lucHaiPairs[animal1] === animal2) {
+                return "Khắc (Lục Hại)";
+            }
+
+            return "Bình thường";
+        }
+
+        // --- Hàm đánh giá tương hợp Ngũ Hành ---
+        function getNguHanhCompatibility(element1, element2) {
+            if (element1 === "Không xác định" || element2 === "Không xác định" || element1 === element2) return "Bình thường";
+
+            const tuongSinh = {
+                "Mộc": "Hỏa", "Hỏa": "Thổ", "Thổ": "Kim", "Kim": "Thủy", "Thủy": "Mộc"
+            };
+            const tuongKhac = {
+                "Mộc": "Thổ", "Thổ": "Thủy", "Thủy": "Hỏa", "Hỏa": "Kim", "Kim": "Mộc"
+            };
+
+            if (tuongSinh[element1] === element2 || tuongSinh[element2] === element1) {
+                return "Rất hợp (Tương Sinh)";
+            }
+            if (tuongKhac[element1] === element2 || tuongKhac[element2] === element1) {
+                return "Khắc (Tương Khắc)";
+            }
+            return "Bình thường"; // Các trường hợp còn lại
+        }
+
+        // --- Hàm chính bói tình duyên ---
+        function boiTinhDuyen() {
+            const tenNamInput = document.getElementById('ten_nam');
+            const dayNamInput = document.getElementById('day_nam');
+            const monthNamInput = document.getElementById('month_nam');
+            const yearNamInput = document.getElementById('year_nam');
+
+            const tenNuInput = document.getElementById('ten_nu');
+            const dayNuInput = document.getElementById('day_nu');
+            const monthNuInput = document.getElementById('month_nu');
+            const yearNuInput = document.getElementById('year_nu');
+
+            const resultArea = document.getElementById('result-area');
+
+            let tenNam = tenNamInput.value.trim();
+            let dayNam = parseInt(dayNamInput.value);
+            let monthNam = parseInt(monthNamInput.value);
+            let yearNam = parseInt(yearNamInput.value);
+
+            let tenNu = tenNuInput.value.trim();
+            let dayNu = parseInt(dayNuInput.value);
+            let monthNu = parseInt(monthNuInput.value);
+            let yearNu = parseInt(yearNuInput.value);
+
+            // Chuyển đổi tên thành chữ thường để so sánh không phân biệt hoa/thường
+            const tenNamLower = tenNam.toLowerCase();
+            const tenNuLower = tenNu.toLowerCase();
+
+            // --- Xử lý tin nhắn đặc biệt ưu tiên hàng đầu ---
+            if (tenNamLower === "giáp đại dương" && tenNuLower === "trần nguyễn huyền trang") {
+                resultArea.innerHTML = `
+                    <p class="special-message" style="font-size: 1.8em; color: #ff007f;">Trang ak "i Love U"</p>
+                    <p style="font-size: 1.1em; color: #555;">(Tin nhắn đặc biệt này được ưu tiên hiển thị!)</p>
+                `;
+                // Lưu lại tên đã nhập để lần sau không phải nhập lại
+                tenNamInput.value = tenNam;
+                tenNuInput.value = tenNu;
+                // Xóa các trường ngày tháng năm sinh để tránh nhầm lẫn
+                dayNamInput.value = '';
+                monthNamInput.value = '';
+                yearNamInput.value = '';
+                dayNuInput.value = '';
+                monthNuInput.value = '';
+                yearNuInput.value = '';
+                return; // Dừng hàm tại đây, không thực hiện các tính toán khác
+            }
+
+            // --- Kiểm tra và xử lý lỗi đầu vào (chỉ chạy nếu không phải tin nhắn đặc biệt) ---
+            if (!tenNam || !tenNu) {
+                resultArea.innerHTML = '<p style="color: red; font-weight: bold;">Vui lòng nhập đầy đủ cả tên nam và tên nữ!</p>';
+                return;
+            }
+
+            const isNamDateValid = isValidDate(dayNam, monthNam, yearNam);
+            const isNuDateValid = isValidDate(dayNu, monthNu, yearNu);
+
+            if (!isNamDateValid || !isNuDateValid) {
+                resultArea.innerHTML = '<p style="color: red; font-weight: bold;">Vui lòng nhập ngày tháng năm sinh hợp lệ cho cả hai người!</p>';
+                return;
+            }
+
+            // --- Logic bói theo tên (chữ cái chung) ---
+            const setTenNam = new Set(tenNamLower);
+            const setTenNu = new Set(tenNuLower);
+
+            let demm = 0;
+            setTenNam.forEach(char => {
+                if (setTenNu.has(char) && char >= 'a' && char <= 'z') { // Chỉ đếm chữ cái
+                    demm++;
+                }
+            });
+
+            let ketQuaTen = '';
+            if (demm === 0) {
+                ketQuaTen = 'Người Dưng';
+            } else if (demm <= 3) {
+                ketQuaTen = 'Chỉ là bạn';
+            } else {
+                ketQuaTen = 'Hợp nhau đó!';
+            }
+
+            // --- Logic bói theo ngày sinh ---
+            const zodiacNam = getZodiacSign(dayNam, monthNam);
+            const zodiacNu = getZodiacSign(dayNu, monthNu);
+            const compatibilityZodiac = getZodiacCompatibility(zodiacNam, zodiacNu);
+
+            const animalNam = getVietnameseZodiac(yearNam);
+            const animalNu = getVietnameseZodiac(yearNu);
+            const compatibilityAnimal = getVietnameseZodiacCompatibility(animalNam, animalNu);
+
+            const elementNam = getNguHanhElement(yearNam);
+            const elementNu = getNguHanhElement(yearNu);
+            const compatibilityElement = getNguHanhCompatibility(elementNam, elementNu);
+
+            // --- Hiển thị kết quả ra HTML ---
+            resultArea.innerHTML = `
+                <p><strong>Thông tin Nam:</strong> ${tenNam} (SN: ${dayNam}/${monthNam}/${yearNam})</p>
+                <p>Cung Hoàng Đạo: <strong>${zodiacNam}</strong> | Con Giáp: <strong>${animalNam}</strong> | Mệnh Ngũ Hành: <strong>${elementNam}</strong></p>
+                <p><strong>Thông tin Nữ:</strong> ${tenNu} (SN: ${dayNu}/${monthNu}/${yearNu})</p>
+                <p>Cung Hoàng Đạo: <strong>${zodiacNu}</strong> | Con Giáp: <strong>${animalNu}</strong> | Mệnh Ngũ Hành: <strong>${elementNu}</strong></p>
+                <hr style="border: 0; border-top: 1px dashed #ccc; margin: 15px 0;">
+                <p><strong>Đánh giá mức độ hợp nhau:</strong></p>
+                <p>- Theo tên (chữ cái chung): <strong>${ketQuaTen}</strong> (có ${demm} chữ cái chung)</p>
+                <p>- Theo Cung Hoàng Đạo: <strong>${compatibilityZodiac}</strong></p>
+                <p>- Theo Con Giáp: <strong>${compatibilityAnimal}</strong></p>
+                <p>- Theo Mệnh Ngũ Hành: <strong>${compatibilityElement}</strong></p>
+            `;
+
+            // Lưu lại tên và ngày sinh đã nhập để lần sau không phải nhập lại
+            tenNamInput.value = tenNam;
+            dayNamInput.value = dayNam;
+            monthNamInput.value = monthNam;
+            yearNamInput.value = yearNam;
+
+            tenNuInput.value = tenNu;
+            dayNuInput.value = dayNu;
+            monthNuInput.value = monthNu;
+            yearNuInput.value = yearNu;
+        }
+
+        // Tự động bói khi người dùng nhấn Enter trong các ô input
+        const inputs = document.querySelectorAll('input[type="text"], input[type="number"]');
+        inputs.forEach(input => {
+            input.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    boiTinhDuyen();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
