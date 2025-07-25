@@ -9,34 +9,35 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            /* Ngăn trình duyệt cuộn trang khi chạm trên mobile */
-            touch-action: none;
-            /* Ngăn người dùng chọn văn bản */
-            -webkit-user-select: none; /* Safari */
-            -moz-user-select: none; /* Firefox */
-            -ms-user-select: none; /* IE10+ */
-            user-select: none; /* Standard */
+            touch-action: none; /* Ngăn cuộn/thu phóng mặc định của trình duyệt */
+            -webkit-user-select: none; /* Ngăn chọn văn bản trên Safari */
+            -moz-user-select: none; /* Ngăn chọn văn bản trên Firefox */
+            -ms-user-select: none; /* Ngăn chọn văn bản trên IE/Edge */
+            user-select: none; /* Ngăn chọn văn bản theo chuẩn */
+            overscroll-behavior: none; /* Ngăn cuộn quá mức */
+            /* Cho phép cuộn dọc khi nội dung tràn ra */
+            overflow-y: auto; 
         }
         canvas {
             background-color: #000000; /* Nền canvas màu đen */
-            border: 2px solid #4b5563; /* Viền màu xám đậm hơn */
+            border: 2px solid #4b5563; /* Viền màu xám đậm */
             border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); /* Đổ bóng màu đỏ nổi bật hơn */
-            transition: transform 0.3s ease-in-out; /* Thêm transition cho canvas */
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); /* Đổ bóng đỏ nổi bật */
+            transition: transform 0.3s ease-in-out; /* Hiệu ứng chuyển động */
         }
         /* Kiểu dáng cho các nút điều khiển cảm ứng */
         .touch-controls button {
-            width: 65px; /* Kích thước nút lớn hơn cho dễ chạm */
+            width: 65px; /* Kích thước nút lớn cho dễ chạm */
             height: 65px;
             font-size: 28px; /* Kích thước chữ/biểu tượng lớn hơn */
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%; /* Làm cho nút tròn */
+            border-radius: 50%; /* Nút tròn */
             transition: background-color 0.2s, transform 0.1s;
         }
         .touch-controls button:active {
-            transform: scale(0.95); /* Hiệu ứng nhấn nút */
+            transform: scale(0.95); /* Hiệu ứng nhấn */
         }
         /* Kiểu dáng tiêu đề */
         #title {
@@ -44,7 +45,7 @@
             color: white;
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
-        /* Điều chỉnh kích thước tiêu đề cho màn hình lớn hơn (ví dụ: máy tính bảng, máy tính để bàn) */
+        /* Điều chỉnh kích thước tiêu đề cho màn hình lớn hơn */
         @media (min-width: 768px) {
             #title {
                 font-size: 3.5rem;
@@ -52,26 +53,27 @@
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-gray-900 to-black flex flex-col items-center justify-center min-h-screen p-4">
+<body class="bg-gradient-to-br from-gray-900 to-black flex flex-col items-center justify-start min-h-screen p-4">
 
-    <div class="text-center mb-6">
+    <div class="text-center mb-6" id="header-section">
         <h1 id="title" class="text-red-500 font-extrabold tracking-wide">TRÒ CHƠI MÊ CUNG</h1>
         <p class="text-gray-300 mt-3 text-lg">Sử dụng các phím mũi tên (hoặc các nút bên dưới) để đi đến lá cờ!</p>
     </div>
 
-    <!-- Canvas cho mê cung. max-w-full và h-auto giúp nó đáp ứng với kích thước màn hình. -->
-    <canvas id="mazeCanvas" class="max-w-full h-auto"></canvas>
+    <canvas id="mazeCanvas" class="max-w-full h-auto flex-shrink-0"></canvas>
 
-    <!-- Khu vực hiển thị thông báo chiến thắng -->
-    <div id="message" class="mt-6 text-3xl font-extrabold text-green-400 h-10 transform transition-transform duration-300 ease-out"></div>
+    <div id="message" class="mt-6 text-3xl font-extrabold text-green-400 h-10 transform transition-transform duration-300 ease-out flex-shrink-0"></div>
     
-    <!-- Nút "Chơi Lại" -->
-    <button id="newGameButton" class="mt-8 px-8 py-4 bg-red-600 text-white text-xl font-bold rounded-full shadow-lg hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-500 focus:ring-opacity-75 transition-all transform hover:scale-110 active:scale-95">
-        Chơi Lại
-    </button>
+    <div class="flex flex-row justify-center items-center mt-8 flex-shrink-0" id="button-section">
+        <button id="newGameButton" class="px-8 py-4 bg-red-600 text-white text-xl font-bold rounded-full shadow-lg hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-500 focus:ring-opacity-75 transition-all transform hover:scale-110 active:scale-95">
+            Chơi Lại
+        </button>
+        <button id="hintButton" class="ml-4 px-8 py-4 bg-blue-600 text-white text-xl font-bold rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-75 transition-all transform hover:scale-110 active:scale-95">
+            Hướng Dẫn
+        </button>
+    </div>
 
-    <!-- Bảng điều khiển cảm ứng cho di động (chỉ hiển thị trên màn hình nhỏ hơn md) -->
-    <div class="touch-controls mt-8 grid grid-cols-3 gap-3 w-60 md:hidden">
+    <div class="touch-controls mt-8 grid grid-cols-3 gap-3 w-60 md:hidden flex-shrink-0" id="touch-controls-section">
         <div></div>
         <button id="btn-up" class="bg-red-500 text-white rounded-full shadow-md active:bg-red-600">↑</button>
         <div></div>
@@ -86,6 +88,7 @@
         const ctx = canvas.getContext('2d');
         const messageEl = document.getElementById('message');
         const newGameButton = document.getElementById('newGameButton');
+        const hintButton = document.getElementById('hintButton'); 
 
         // Cấu hình mê cung
         const TILE_SIZE = 25; // Kích thước cơ bản của mỗi ô
@@ -94,9 +97,11 @@
         let maze = [];
 
         // Định nghĩa người chơi và mục tiêu
-        let player = { x: 1, y: 1, color: '#3b82f6', size: TILE_SIZE * 0.6 }; // Người chơi màu xanh nổi bật
-        let goal = {}; // Vị trí mục tiêu
-        let gameWon = false; // Trạng thái chiến thắng trò chơi
+        let player = { x: 1, y: 1, color: '#3b82f6', size: TILE_SIZE * 0.6 };
+        let goal = {};
+        let gameWon = false;
+        let showHint = false; 
+        let currentHintPath = null; 
 
         /**
          * Hàm tạo mê cung ngẫu nhiên bằng thuật toán Recursive Backtracker (DFS)
@@ -107,7 +112,7 @@
             let newMaze = Array(rows).fill(null).map(() => Array(cols).fill(1)); // 1 = tường, 0 = đường đi
             const stack = [];
             let current = { r: 1, c: 1 };
-            newMaze[current.r][current.c] = 0; // Ô bắt đầu là đường đi
+            newMaze[current.r][current.c] = 0; 
             
             // Tính tổng số ô đường đi cần thiết cho thuật toán tạo mê cung
             const totalPathCells = Math.ceil((rows - 1) / 2) * Math.ceil((cols - 1) / 2);
@@ -125,22 +130,21 @@
 
                 if (neighbors.length > 0) {
                     const next = neighbors[Math.floor(Math.random() * neighbors.length)];
-                    stack.push(current); // Đẩy ô hiện tại vào stack
-                    newMaze[next.wall.r][next.wall.c] = 0; // Đục đường đi qua tường
-                    current = { r: next.r, c: next.c }; // Di chuyển đến ô tiếp theo
-                    newMaze[current.r][current.c] = 0; // Đánh dấu ô tiếp theo là đường đi
+                    stack.push(current); 
+                    newMaze[next.wall.r][next.wall.c] = 0; 
+                    current = { r: next.r, c: next.c }; 
+                    newMaze[current.r][current.c] = 0; 
                     visitedCount++;
                 } else if (stack.length > 0) {
-                    current = stack.pop(); // Quay lui
+                    current = stack.pop(); 
                 } else {
-                    // Trường hợp này xử lý khi thuật toán có thể bị kẹt nếu một phần bị cô lập
                     break;
                 }
             }
 
             // Đảm bảo điểm bắt đầu và kết thúc là đường đi
-            newMaze[1][1] = 0; // Vị trí người chơi bắt đầu
-            newMaze[rows - 2][cols - 2] = 0; // Vị trí mục tiêu
+            newMaze[1][1] = 0; 
+            newMaze[rows - 2][cols - 2] = 0; 
 
             // Đảm bảo có đường đi đến mục tiêu nếu nó bị tường bao quanh do ngẫu nhiên
             if (newMaze[rows - 3][cols - 2] === 1) newMaze[rows - 3][cols - 2] = 0;
@@ -154,12 +158,25 @@
          * Đảm bảo số hàng và cột là số lẻ và có kích thước tối thiểu.
          */
         function setMazeDimensions() {
-            // 90% chiều rộng màn hình để có khoảng trống
-            const maxCanvasWidth = window.innerWidth * 0.9;
-            // 60% chiều cao màn hình để chừa chỗ cho điều khiển
-            const maxCanvasHeight = window.innerHeight * 0.6;
+            // Lấy chiều cao của các phần tử UI cố định
+            const headerHeight = document.getElementById('header-section').offsetHeight;
+            const messageHeight = messageEl.offsetHeight + (parseInt(window.getComputedStyle(messageEl).marginTop) || 0);
+            const buttonContainerHeight = document.getElementById('button-section').offsetHeight + (parseInt(window.getComputedStyle(document.getElementById('button-section')).marginTop) || 0);
+            
+            // Chỉ tính touch controls nếu chúng hiển thị (md:hidden)
+            const touchControlsSection = document.getElementById('touch-controls-section');
+            const touchControlsHeight = window.getComputedStyle(touchControlsSection).display !== 'none' ? 
+                                       (touchControlsSection.offsetHeight + (parseInt(window.getComputedStyle(touchControlsSection).marginTop) || 0)) : 0;
+            
+            const bodyPaddingY = (parseInt(window.getComputedStyle(document.body).paddingTop) || 0) + (parseInt(window.getComputedStyle(document.body).paddingBottom) || 0);
+            
+            const totalFixedUIHeight = headerHeight + messageHeight + buttonContainerHeight + touchControlsHeight + bodyPaddingY;
 
-            // Tính toán số cột và hàng tối đa có thể vừa, đảm bảo chúng là số lẻ
+            // Chiều cao tối đa còn lại cho canvas (trừ thêm một ít buffer)
+            const maxCanvasHeight = window.innerHeight - totalFixedUIHeight - 20; 
+            const maxCanvasWidth = window.innerWidth * 0.9; // 90% chiều rộng màn hình
+
+            // Tính toán số cột và hàng tối đa có thể vừa
             MAZE_COLS = Math.floor(maxCanvasWidth / TILE_SIZE);
             MAZE_ROWS = Math.floor(maxCanvasHeight / TILE_SIZE);
 
@@ -167,9 +184,9 @@
             MAZE_COLS = MAZE_COLS % 2 === 0 ? MAZE_COLS - 1 : MAZE_COLS;
             MAZE_ROWS = MAZE_ROWS % 2 === 0 ? MAZE_ROWS - 1 : MAZE_ROWS;
 
-            // Đảm bảo kích thước tối thiểu để trò chơi có thể chơi được
-            MAZE_COLS = Math.max(15, MAZE_COLS); // Tối thiểu 15 cột
-            MAZE_ROWS = Math.max(15, MAZE_ROWS); // Tối thiểu 15 hàng
+            // Đảm bảo kích thước tối thiểu để trò chơi có thể chơi được và không bị quá nhỏ
+            MAZE_COLS = Math.max(15, MAZE_COLS); 
+            MAZE_ROWS = Math.max(15, MAZE_ROWS); 
 
             // Đảm bảo hàng và cột ít nhất là 3 (1 tường, 1 đường đi, 1 tường)
             MAZE_COLS = MAZE_COLS < 3 ? 3 : MAZE_COLS;
@@ -186,11 +203,14 @@
             // Đặt kích thước canvas
             canvas.width = MAZE_COLS * TILE_SIZE;
             canvas.height = MAZE_ROWS * TILE_SIZE;
+
+            // Cập nhật lại kích thước người chơi theo TILE_SIZE mới
+            player.size = TILE_SIZE * 0.6;
         }
 
         // Hàm khởi tạo và vẽ game
         function init() {
-            setMazeDimensions(); // Đặt kích thước dựa trên kích thước màn hình hiện tại
+            setMazeDimensions(); 
             maze = generateMaze(MAZE_ROWS, MAZE_COLS);
             player.x = 1;
             player.y = 1;
@@ -198,16 +218,21 @@
             goal.y = MAZE_ROWS - 2;
             gameWon = false;
             messageEl.textContent = '';
-            canvas.style.transform = 'scale(1)'; // Đặt lại tỷ lệ canvas
+            canvas.style.transform = 'scale(1)';
+            showHint = false; 
+            currentHintPath = null; 
             drawGame();
         }
 
         // Hàm vẽ toàn bộ game
         function drawGame() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Xóa canvas
-            drawMaze(); // Vẽ mê cung
-            drawGoal(); // Vẽ mục tiêu
-            drawPlayer(); // Vẽ người chơi
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+            drawMaze(); 
+            drawGoal(); 
+            if (showHint && currentHintPath) { 
+                drawHintPath(currentHintPath);
+            }
+            drawPlayer(); 
         }
 
         // Hàm vẽ mê cung
@@ -215,7 +240,7 @@
             for (let row = 0; row < MAZE_ROWS; row++) {
                 for (let col = 0; col < MAZE_COLS; col++) {
                     if (maze[row][col] === 1) {
-                        ctx.fillStyle = '#dc2626'; // Màu tường đỏ
+                        ctx.fillStyle = '#dc2626'; /* Màu tường đỏ */
                         ctx.fillRect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                     }
                 }
@@ -234,27 +259,85 @@
 
         // Hàm vẽ mục tiêu (lá cờ)
         function drawGoal() {
-            // Sử dụng font emoji để hiển thị lá cờ tốt hơn
             ctx.font = `${TILE_SIZE * 0.8}px 'Segoe UI Emoji', 'Inter', sans-serif`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             const goalX = goal.x * TILE_SIZE + TILE_SIZE / 2;
             const goalY = goal.y * TILE_SIZE + TILE_SIZE / 2;
-            ctx.fillText('🚩', goalX, goalY);
+            ctx.fillText('🚩', goalX, goalY); 
+        }
+
+        /**
+         * Hàm tìm đường đi ngắn nhất bằng thuật toán Breadth-First Search (BFS).
+         */
+        function findShortestPath(startR, startC, endR, endC) {
+            const queue = [{ r: startR, c: startC, path: [{ r: startR, c: startC }] }];
+            const visited = new Set();
+            visited.add(`${startR},${startC}`);
+
+            while (queue.length > 0) {
+                const { r, c, path } = queue.shift();
+
+                if (r === endR && c === endC) {
+                    return path; 
+                }
+
+                const directions = [
+                    { dr: -1, dc: 0 }, { dr: 1, dc: 0 },  
+                    { dr: 0, dc: -1 }, { dr: 0, dc: 1 }   
+                ];
+
+                for (const dir of directions) {
+                    const newR = r + dir.dr;
+                    const newC = c + dir.dc;
+
+                    if (newR >= 0 && newR < MAZE_ROWS && newC >= 0 && newC < MAZE_COLS &&
+                        maze[newR][newC] === 0 && !visited.has(`${newR},${newC}`)) {
+                        visited.add(`${newR},${newC}`);
+                        queue.push({ r: newR, c: newC, path: [...path, { r: newR, c: newC }] });
+                    }
+                }
+            }
+            return null; 
+        }
+
+        /**
+         * Hàm vẽ đường dẫn gợi ý trên canvas.
+         */
+        function drawHintPath(path) {
+            if (!path) return;
+            ctx.strokeStyle = 'rgba(255, 255, 0, 0.8)'; /* Đường viền màu vàng đậm */
+            ctx.lineWidth = 3;
+
+            ctx.beginPath();
+            for (let i = 0; i < path.length; i++) {
+                const { r, c } = path[i];
+                const centerX = c * TILE_SIZE + TILE_SIZE / 2;
+                const centerY = r * TILE_SIZE + TILE_SIZE / 2;
+
+                if (i === 0) {
+                    ctx.moveTo(centerX, centerY);
+                } else {
+                    ctx.lineTo(centerX, centerY);
+                }
+            }
+            ctx.stroke(); 
         }
 
         // Hàm xử lý di chuyển người chơi
         function movePlayer(dx, dy) {
-            if (gameWon) return; // Không di chuyển nếu trò chơi đã thắng
+            if (gameWon) return; 
             const nextX = player.x + dx;
             const nextY = player.y + dy;
 
-            // Kiểm tra giới hạn và nếu ô tiếp theo là đường đi (0)
             if (nextY >= 0 && nextY < MAZE_ROWS && nextX >= 0 && nextX < MAZE_COLS && maze[nextY][nextX] === 0) {
                 player.x = nextX;
                 player.y = nextY;
-                drawGame(); // Vẽ lại game sau khi di chuyển
-                checkWin(); // Kiểm tra xem người chơi đã thắng chưa
+                if (showHint) {
+                    currentHintPath = findShortestPath(player.y, player.x, goal.y, goal.x);
+                }
+                drawGame(); 
+                checkWin(); 
             }
         }
 
@@ -263,10 +346,10 @@
             if (player.x === goal.x && player.y === goal.y) {
                 gameWon = true;
                 messageEl.textContent = 'Bạn đã thắng!';
-                messageEl.classList.add('animate-bounce'); // Thêm hiệu ứng nảy cho thông báo
-                canvas.style.transform = 'scale(1.02)'; // Thu phóng nhẹ canvas khi thắng
+                messageEl.classList.add('animate-bounce'); 
+                canvas.style.transform = 'scale(1.02)'; 
                 setTimeout(() => {
-                    canvas.style.transform = 'scale(1)'; // Đặt lại sau khi animation kết thúc
+                    canvas.style.transform = 'scale(1)'; 
                     messageEl.classList.remove('animate-bounce');
                 }, 1000);
             }
@@ -285,48 +368,53 @@
         // Lắng nghe sự kiện nút "Chơi Lại"
         newGameButton.addEventListener('click', init);
 
+        // Lắng nghe sự kiện nút "Hướng Dẫn"
+        hintButton.addEventListener('click', () => {
+            showHint = !showHint; 
+            if (showHint) {
+                currentHintPath = findShortestPath(player.y, player.x, goal.y, goal.x);
+            } else {
+                currentHintPath = null;
+            }
+            drawGame(); 
+        });
+
         // Lắng nghe sự kiện cho các nút điều khiển cảm ứng
         document.getElementById('btn-up').addEventListener('click', () => movePlayer(0, -1));
         document.getElementById('btn-down').addEventListener('click', () => movePlayer(0, 1));
         document.getElementById('btn-left').addEventListener('click', () => movePlayer(-1, 0));
-        document.getElementById('btn-right').addEventListener('click', () => movePlayer(1, 0));
+        document.getElementById('btn-right').addEventListener('click', () => movePlayer(1, 0)); 
 
         // Thêm sự kiện chạm vào canvas để di chuyển nhân vật
         canvas.addEventListener('touchend', (e) => {
-            if (gameWon) return; // Không xử lý chạm nếu trò chơi đã thắng
-            // Lấy vị trí chạm tương đối trên canvas
+            if (gameWon) return; 
             const touchX = e.changedTouches[0].clientX - canvas.getBoundingClientRect().left;
             const touchY = e.changedTouches[0].clientY - canvas.getBoundingClientRect().top;
 
-            // Tính toán vị trí trung tâm của người chơi trên canvas
             const playerCanvasX = player.x * TILE_SIZE + TILE_SIZE / 2;
             const playerCanvasY = player.y * TILE_SIZE + TILE_SIZE / 2;
 
-            // Tính toán độ lệch từ vị trí người chơi đến điểm chạm
             const deltaX = touchX - playerCanvasX;
             const deltaY = touchY - playerCanvasY;
 
-            // Xác định hướng di chuyển dựa trên độ lệch lớn nhất
             if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                // Di chuyển ngang
                 if (deltaX > 0) {
-                    movePlayer(1, 0); // Sang phải
+                    movePlayer(1, 0); 
                 } else {
-                    movePlayer(-1, 0); // Sang trái
+                    movePlayer(-1, 0); 
                 }
             } else {
-                // Di chuyển dọc
                 if (deltaY > 0) {
-                    movePlayer(0, 1); // Xuống
+                    movePlayer(0, 1); 
                 } else {
-                    movePlayer(0, -1); // Lên
+                    movePlayer(0, -1); 
                 }
             }
         });
 
         // Khởi động game khi tải trang và khi cửa sổ thay đổi kích thước
         window.onload = init;
-        window.addEventListener('resize', init); // Khởi tạo lại mê cung khi thay đổi kích thước màn hình để đáp ứng
+        window.addEventListener('resize', init); 
     </script>
 </body>
 </html>
