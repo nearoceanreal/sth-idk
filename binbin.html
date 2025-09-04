@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang web Hacker</title>
+    <!-- Thư viện Tailwind CSS để tạo kiểu dáng nhanh chóng -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* CSS tùy chỉnh để tạo hiệu ứng terminal */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Roboto Mono', monospace;
+            overflow: hidden; /* Ngăn cuộn trang */
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-shadow: 0 0 5px #0f0, 0 0 10px #0f0;
+            padding: 2rem;
+            text-align: center;
+        }
+        .text-output {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 1.5rem; /* Tăng kích thước chữ cho vùng văn bản */
+            line-height: 1.5;
+            min-height: 200px;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        .cursor {
+            animation: blink 1s step-end infinite;
+            display: inline-block;
+            vertical-align: top;
+        }
+        
+        .btn {
+            /* Các thuộc tính cơ bản của nút */
+            @apply relative mt-8 px-8 py-4 text-2xl font-bold rounded-full transition-all duration-300 transform overflow-hidden;
+            background-color: #0f0;
+            color: #000;
+            /* Tăng độ dày của viền */
+            border: 4px solid #0f0;
+            box-shadow: 0 0 10px #0f0;
+            /* Hiệu ứng nhấp nháy */
+            animation: pulse-glow 2s infinite;
+        }
+        
+        .btn:hover {
+            /* Hiệu ứng khi di chuột qua */
+            transform: scale(1.1);
+            box-shadow: 0 0 15px #0f0, 0 0 25px #0f0, 0 0 40px #0f0;
+        }
+        
+        /* Keyframes cho hiệu ứng nhấp nháy */
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 5px #0f0, 0 0 10px #0f0;
+            }
+            50% {
+                box-shadow: 0 0 15px #0f0, 0 0 25px #0f0;
+            }
+            100% {
+                box-shadow: 0 0 5px #0f0, 0 0 10px #0f0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Vùng hiển thị hiệu ứng nhập văn bản -->
+        <pre id="hacker-text" class="text-output text-green-400"></pre>
+
+        <!-- Nút bấm -->
+        <a id="rickroll-btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn">
+            bấm vào đây để bị hack (đùa thôi bấm vô đê)
+        </a>
+    </div>
+
+    <script>
+        // Lấy các phần tử HTML
+        const hackerTextElement = document.getElementById('hacker-text');
+        const button = document.getElementById('rickroll-btn');
+
+        // Chuỗi văn bản để mô phỏng quá trình hack
+        const lines = [
+            'C:\\Users\\Guest> Đang khởi động kết nối tới máy chủ...',
+            'Đã kết nối thành công. IP: 192.168.1.1',
+            'Đang tìm kiếm lỗ hổng...',
+            'Tìm thấy 3 lỗ hổng bảo mật nghiêm trọng.',
+            'Đang khai thác...',
+            'Truy cập được cấp. Chuẩn bị xâm nhập hệ thống...',
+            'Đang tải xuống virus...',
+            'Đã tải xuống thành công!',
+            'Hack thành công! Chúc mừng bạn đã bị lừa.'
+        ];
+
+        let lineIndex = 0;
+        let charIndex = 0;
+
+        function typeText() {
+            // Kiểm tra xem còn dòng nào để nhập không
+            if (lineIndex < lines.length) {
+                const currentLine = lines[lineIndex];
+
+                // Kiểm tra xem còn ký tự nào để nhập trong dòng hiện tại không
+                if (charIndex < currentLine.length) {
+                    // Thêm ký tự vào phần tử hiển thị
+                    hackerTextElement.textContent += currentLine.charAt(charIndex);
+                    charIndex++;
+                    // Gọi lại hàm để nhập ký tự tiếp theo sau một khoảng thời gian ngắn
+                    setTimeout(typeText, 50); // Tốc độ nhập
+                } else {
+                    // Khi đã nhập hết một dòng, xuống dòng và chuẩn bị nhập dòng tiếp theo
+                    hackerTextElement.textContent += '\n';
+                    lineIndex++;
+                    charIndex = 0;
+                    // Chờ một chút trước khi bắt đầu nhập dòng mới
+                    setTimeout(typeText, 1000);
+                }
+            } else {
+                // Khi đã nhập hết tất cả các dòng, hiển thị nút bấm
+                button.style.display = 'block';
+            }
+        }
+
+        // Bắt đầu hiệu ứng nhập văn bản khi trang web tải xong
+        window.onload = function() {
+            typeText();
+        };
+
+    </script>
+</body>
+</html>
