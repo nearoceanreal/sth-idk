@@ -16,7 +16,7 @@
       overflow: hidden;
     }
 
-    /* Canvas phủ nền */
+    /* Nền Matrix */
     #matrix {
       position: fixed;
       top: 0;
@@ -27,102 +27,108 @@
     }
 
     .container {
+      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      text-shadow: 0 0 5px #fff, 0 0 10px #fff;
-      padding: 2rem;
+      padding: 1rem;
       text-align: center;
-      position: relative;
     }
 
     .text-output {
       white-space: pre-wrap;
       word-wrap: break-word;
-      font-size: 1.5rem;
-      line-height: 1.5;
-      min-height: 200px;
+      font-size: 1.2rem;
+      line-height: 1.4;
+      min-height: 160px;
+      max-width: 95%;
+      margin: 0 auto;
+      text-shadow: 0 0 5px #0f0, 0 0 10px #0f0;
     }
 
-    /* ===== Nút neon ===== */
+    /* Nút neon */
     .btn {
       position: absolute;
-      top: 50%;
+      bottom: 35%;
       left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 1rem 2.5rem;
-      font-size: 1.875rem;
+      transform: translateX(-50%) translateY(30px);
+      opacity: 0;
+      padding: 0.75rem 2rem;
+      font-size: 1.25rem;
       font-weight: bold;
-      color: #fff; /* chữ trắng luôn */
+      color: #fff !important;
       border: 2px solid #0f0;
-      border-radius: 0.75rem;
-      background: #0f0;
+      border-radius: 0.5rem;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(6px);
       text-transform: uppercase;
       letter-spacing: 2px;
       cursor: pointer;
-      overflow: hidden;
+      text-shadow: 0 0 8px #0f0;
+      box-shadow: 0 0 20px #0f0, 0 0 40px #0f0;
+      transition: all 0.8s ease;
       z-index: 10;
-      text-shadow: 0 0 5px #000;
-      box-shadow: 0 0 20px #0f0, 0 0 40px #0f0, 0 0 60px #0f0;
-      transition: all 0.3s ease-in-out;
-      opacity: 0;
-      pointer-events: none;
+      width: 80%;
+      max-width: 320px;
     }
 
     .btn.show {
       opacity: 1;
-      pointer-events: auto;
-    }
-
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.6), transparent);
-      transition: 0.5s;
-    }
-
-    .btn:hover::before {
-      left: 100%;
+      transform: translateX(-50%) translateY(0);
     }
 
     .btn:hover {
-      color: #fff; /* vẫn trắng khi hover */
-      background: #0f0;
+      background: rgba(0, 50, 0, 0.9);
       box-shadow: 0 0 30px #0f0, 0 0 60px #0f0, 0 0 100px #0f0;
-      transform: scale(1.1) translate(-50%, -50%);
+      transform: translateX(-50%) scale(1.05);
+    }
+
+    /* ===== Responsive: chữ và nút thu nhỏ ===== */
+    @media (max-width: 640px) {
+      .text-output {
+        font-size: 0.95rem;
+        line-height: 1.3;
+        min-height: 140px;
+      }
+
+      .btn {
+        font-size: 1rem;
+        padding: 0.6rem 1.2rem;
+        max-width: 90%;
+        bottom: 40%;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Canvas nền hiệu ứng matrix -->
+  <!-- Canvas nền Matrix -->
   <canvas id="matrix"></canvas>
 
   <div class="container">
     <pre id="hacker-text" class="text-output"></pre>
-
-    <a id="rickroll-btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn">
+    <a id="rickroll-btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+       target="_blank" class="btn">
       bấm vào đây để bị hack
     </a>
   </div>
 
   <script>
-    /* ========== Hiệu ứng Matrix Rain ========== */
+    /* ========== Matrix Rain ========== */
     const canvas = document.getElementById("matrix");
     const ctx = canvas.getContext("2d");
 
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
+    function resizeCanvas() {
+      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+    }
+    resizeCanvas();
 
-    const chars = "アァイィウヴエェオカガキギクグケゲコゴサザシジスズセゼソゾタダチッヂツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモヤユヨラリルレロワンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    const font_size = 14;
-    const columns = canvas.width / font_size;
-    const drops = Array(Math.floor(columns)).fill(1);
+    const chars = "アァイィウヴエェオカガキギクグケゲコゴサザシジスズセゼソゾABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let font_size = 14;
+    let columns = canvas.width / font_size;
+    let drops = Array(Math.floor(columns)).fill(1);
 
     function draw() {
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
@@ -145,11 +151,12 @@
     setInterval(draw, 33);
 
     window.addEventListener("resize", () => {
-      canvas.height = window.innerHeight;
-      canvas.width = window.innerWidth;
+      resizeCanvas();
+      columns = canvas.width / font_size;
+      drops = Array(Math.floor(columns)).fill(1);
     });
 
-    /* ========== Hiệu ứng chữ gõ ========== */
+    /* ========== Gõ từng chữ ========== */
     const hackerTextElement = document.getElementById('hacker-text');
     const button = document.getElementById('rickroll-btn');
 
@@ -175,19 +182,19 @@
         if (charIndex < currentLine.length) {
           hackerTextElement.textContent += currentLine.charAt(charIndex);
           charIndex++;
-          setTimeout(typeText, 25); // tốc độ vừa phải
+          setTimeout(typeText, 35);
         } else {
           hackerTextElement.textContent += '\n';
           lineIndex++;
           charIndex = 0;
-          setTimeout(typeText, 400); // nghỉ chút khi xuống dòng
+          setTimeout(typeText, 400);
         }
       } else {
-        button.classList.add('show'); // hiện nút
+        button.classList.add('show'); // Hiện nút sau khi gõ xong
       }
     }
 
-    window.onload = function() {
+    window.onload = function () {
       typeText();
     };
   </script>
