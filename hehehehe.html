@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giáp Đại Dương - Developer & Designer</title>
+    <!-- 1. FONT FIX: Nhúng font Inter từ Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <!-- 2. ICON FIX: Nhúng Phosphor Icons để có các biểu tượng hiện đại -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        /* Base Reset & Variables (Optimized for richer glow) */
+        :root {
+            --color-primary: #6366f1; /* Indigo - for main CTA */
+            --color-secondary: #ec4899; /* Pink - for highlights */
+            --color-tertiary: #06b6d4; /* Cyan - for accents */
+            --color-background-base: #01020a; /* Ultra Dark Base */
+            --color-text: #f0f4f8; /* Light blue-white text */
+            --color-muted: #94a3b8; /* Slate 400 */
+            --glass-border: rgba(255, 255, 255, 0.18); /* Dày hơn và sáng hơn */
+            --glass-bg: rgba(255, 255, 255, 0.05); /* Thinner glass background */
+            --glass-bg-hover: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* 3. Global Styles & Enhanced Background */
+        body {
+            background-color: var(--color-background-base);
+            color: var(--color-text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 4. Background Noise Effect (Giữ nguyên) */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            z-index: -1;
+        }
+
+        /* 5. Orb Effects (Nền động) */
+        .bg-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(280px) brightness(1.2); /* Blur mạnh và sáng hơn */
+            opacity: 0.3;
+            animation: float 35s infinite ease-in-out;
+        }
+
+        #orb1 {
+            width: 400px; height: 400px;
+            background: var(--color-primary);
+            top: 10%; left: 10%;
+            animation-delay: 0s;
+        }
+
+        #orb2 {
+            width: 350px; height: 350px;
+            background: var(--color-secondary);
+            bottom: 5%; right: 15%;
+            animation-delay: -10s;
+        }
+        
+        #orb3 {
+            width: 500px; height: 500px;
+            background: var(--color-tertiary);
+            top: 50%; left: 80%;
+            animation-delay: -20s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(25vw, -15vh) scale(1.1) rotate(10deg); }
+            66% { transform: translate(-20vw, 20vh) scale(0.95) rotate(-10deg); }
+        }
+
+
+        /* 6. Glassmorphism & 3D Tilt Setup */
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            position: relative;
+            padding: 40px;
+            z-index: 10;
+        }
+        
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(35px);
+            border-radius: 30px; /* Tròn hơn */
+            border: 1px solid var(--glass-border);
+            transition: box-shadow 0.6s, transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+            
+            /* Custom CSS variable for light glow position */
+            --glow-x: 50%;
+            --glow-y: 50%;
+            --card-glow-color: var(--color-primary); /* Default glow color for skill cards */
+        }
+        
+        /* Inner light glow effect (Sáng hơn khi di chuột) */
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(400px circle at var(--glow-x) var(--glow-y), rgba(255, 255, 255, 0.1), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Neon Glow Border Effect on Hover (Áp dụng cho mọi card) */
+        .glass-card::after {
+            content: '';
+            position: absolute;
+            top: -5px; 
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 35px;
+            /* Sử dụng card-glow-color (biến CSS được đặt trong HTML hoặc JS) */
+            background: radial-gradient(circle at 50% 50%, var(--card-glow-color), transparent 70%); 
+            filter: blur(20px); 
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+
+        .glass-card:hover::after {
+            opacity: 0.6; /* Hiển thị glow border ảo khi hover */
+        }
+        
+        .glass-card:hover {
+            transform: scale(1.01) perspective(1000px);
+            box-shadow: 
+                0 0 50px rgba(0, 0, 0, 0.6),
+                0 0 25px var(--card-glow-color); /* Thêm glow vào shadow khi hover */
+        }
+
+        /* 7. Header (Giữ nguyên) */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(99, 102, 241, 0.5); /* Thêm shadow nhẹ */
+        }
+
+        header p {
+            font-size: 1.25rem;
+            color: var(--color-muted);
+            margin-top: 10px;
+        }
+        
+        /* ==================================== */
+        /* NEW: 8. PROFILE CARD STYLING */
+        /* ==================================== */
+        .main-profile {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            padding: 50px;
+            margin-bottom: 50px;
+            
+            /* Đảm bảo profile card nổi bật hơn các card khác */
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+        
+        .profile-content {
+            flex-grow: 1;
+        }
+        
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            min-width: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--color-primary);
+            box-shadow: 0 0 25px var(--color-primary); /* Neon ring effect */
+            background-color: #1f2937; /* Placeholder background */
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-content h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            color: var(--color-text);
+        }
+        
+        .profile-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-secondary);
+            margin-bottom: 20px;
+            /* Thêm hiệu ứng glow cho chức danh */
+            text-shadow: 0 0 10px rgba(236, 72, 153, 0.3);
+        }
+        
+        .profile-content p {
+            font-size: 1.1rem;
+            /* CẬP NHẬT MÀU CHỮ & GLOW */
+            color: var(--color-text); /* Đổi từ color-muted sang color-text */
+            text-shadow: 0 0 8px rgba(240, 244, 248, 0.2); /* Thêm glow nhẹ cho chữ */
+            line-height: 1.6;
+            max-width: 800px;
+        }
+        
+        .social-links {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+        }
+        
+        .social-link {
+            color: var(--color-text);
+            font-size: 1.8rem;
+            transition: color 0.3s, transform 0.3s;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            color: var(--color-primary);
+            transform: translateY(-5px);
+            filter: drop-shadow(0 0 10px var(--color-primary));
+        }
+
+        /* 9. SKILLS SECTION (Tối ưu hóa thành Tabs) */
+        /* ==================================== */
+        
+        .skills-container {
+            margin-top: 40px;
+            padding: 30px;
+        }
+        
+        .skills-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .skills-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 10px;
+        }
+        
+        /* Tab Navigation (Pill Style) */
+        .tab-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .tab-button {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--color-muted);
+            padding: 12px 25px;
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Tab Active State (Glow Effect) */
+        .tab-button.active {
+            color: var(--color-text);
+            border-color: var(--active-color); /* Màu tùy chỉnh cho từng tab */
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2), 
+                        0 0 25px var(--active-color);
+        }
+        
+        .tab-button.active::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--active-color);
+            filter: blur(15px);
+            opacity: 0.3;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        /* Specific Tab Colors */
+        .tab-button[data-tab="frontend"] { --active-color: var(--color-primary); }
+        .tab-button[data-tab="design"] { --active-color: var(--color-secondary); }
+        .tab-button[data-tab="backend"] { --active-color: var(--color-tertiary); }
+        
+        /* Tab Content Grid */
+        .tab-content {
+            display: none;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            animation: fadeIn 0.5s ease-out;
+            padding-top: 20px;
+        }
+        
+        .tab-content.active {
+            display: grid;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Skill Item Card */
+        .skill-item-card {
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.3s, background 0.3s;
+        }
+        
+        .skill-item-card:hover {
+            background: var(--glass-bg-hover);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .skill-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .skill-header h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+        
+        .skill-header span {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--skill-color); /* Màu động */
+        }
+
+        .skill-bar {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1); 
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: var(--skill-color); /* Màu động */
+            border-radius: 20px;
+            box-shadow: 0 0 10px var(--skill-color); /* Thêm glow cho progress bar */
+            transition: width 1.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 20px;
+            }
+            header h1 {
+                font-size: 2.5rem;
+            }
+            .skills-container {
+                padding: 20px 0;
+            }
+            .skills-header h2 {
+                font-size: 2rem;
+            }
+            /* Cải tiến responsive cho Profile Card */
+            .main-profile {
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
+                padding: 30px;
+            }
+
+            .profile-avatar {
+                width: 120px;
+                height: 120px;
+                min-width: 120px;
+            }
+            
+            .profile-content h2 {
+                font-size: 2.2rem;
+            }
+            
+            .profile-content h3 {
+                font-size: 1.2rem;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            header p {
+                font-size: 1rem;
+            }
+            .tab-nav {
+                gap: 10px;
+            }
+            .tab-button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-effects">
+        <div id="orb1" class="orb"></div>
+        <div id="orb2" class="orb"></div>
+        <div id="orb3" class="orb"></div>
+    </div>
+    
+    <div class="container">
+        <!-- HEADER SECTION -->
+        <header>
+            <h1>Giáp Đại Dương</h1>
+            <p>Hành trình ấp ủ ước mơ kiến tạo và thiết kế trải nghiệm người dùng.</p>
+        </header>
+
+        <!-- MAIN CONTENT (Profile Card) -->
+        <section class="main-profile glass-card" data-glow-color="var(--color-primary)">
+            <div class="profile-avatar">
+                <!-- Avatar Placeholder: Dùng placeholder đơn giản -->
+                <img src="https://placehold.co/150x150/6366f1/ffffff?text=GD" alt="Avatar Giáp Đại Dương">
+            </div>
+            <div class="profile-content">
+                <h2>GIÁP ĐẠI DƯƠNG</h2>
+                <h3>FULL-STACK DEVELOPER & DESIGNER CHUYÊN NGHIỆP</h3>
+                <p>
+                    Chào mừng đến với không gian cá nhân của tôi! Tôi là Giáp Đại Dương, một chuyên gia kết hợp giữa lập trình Full-Stack hiện đại (MERN stack, Next.js) và tư duy thiết kế UX/UI chuyên nghiệp.
+                    <br><br>
+                    Tôi **thích chơi cờ vua** và xem **code là niềm vui**. Mục tiêu của tôi là kiến tạo những ứng dụng web không chỉ hoạt động trơn tru mà còn mang lại trải nghiệm người dùng trực quan và đẹp mắt. Tôi đam mê xây dựng các giao diện Dark Glassmorphism với hiệu ứng Neon/Glow tinh tế.
+                </p>
+                
+                <div class="social-links">
+                    <a href="#" class="social-link" title="Github"><i class="ph-github-logo-fill"></i></a>
+                    <a href="#" class="social-link" title="LinkedIn"><i class="ph-linkedin-logo-fill"></i></a>
+                    <a href="#" class="social-link" title="Facebook"><i class="ph-facebook-logo-fill"></i></a>
+                    <a href="#" class="social-link" title="Email"><i class="ph-envelope-fill"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS SECTION (Tập trung cải tiến) -->
+        <section class="skills-container glass-card" id="skills" data-glow-color="var(--color-secondary)">
+            <div class="skills-header">
+                <h2>Bộ Kỹ Năng & Công Cụ</h2>
+                <p>Những công nghệ và lĩnh vực tôi thành thạo.</p>
+            </div>
+            
+            <div class="tab-nav">
+                <button class="tab-button active" data-tab="frontend">
+                    <i class="ph-code-simple" style="margin-right: 5px;"></i> Phát triển Web
+                </button>
+                <button class="tab-button" data-tab="design">
+                    <i class="ph-palette" style="margin-right: 5px;"></i> Thiết Kế & UX/UI
+                </button>
+                <button class="tab-button" data-tab="backend">
+                    <i class="ph-server" style="margin-right: 5px;"></i> Cơ Sở Dữ Liệu & Server
+                </button>
+            </div>
+            
+            <div id="frontend" class="tab-content active">
+                <div class="skill-item-card" style="--skill-color: var(--color-primary);">
+                    <div class="skill-header">
+                        <h4>HTML5 & CSS3</h4>
+                        <span>95%</span>
+                    </div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 95%;"></div></div>
+                </div>
+                <div class="skill-item-card" style="--skill-color: #f7df1e;">
+                    <div class="skill-header">
+                        <h4>JavaScript (ES6+)</h4>
+                        <span>90%</span>
+                    </div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 90%;"></div></div>
+                </div>
+                <div class="skill-item-card" style="--skill-color: #61dafb;">
+                    <div class="skill-header">
+                        <h4>ReactJS & Next.js</h4>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 80%;"></div></div>
+                </div>
+                <div class="skill-item-card" style="--skill-color: #38bdf8;">
+                    <div class="skill-header">
+                        <h4>Tailwind CSS</h4>
+                        <span>98%</span>
+                    </div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 98%;"></div></div>
+                </div>
+                <div class="skill-item-card" style="--skill-color: #007acc;">
+                    <div class="skill-header">
+                        <h4>TypeScript</h4>
+                        <span>75%</span>
+                    </div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 75%;"></div></div>
+                </div>
+                <div class="skill-item-card" style="--skill-color: #41b883;">
+                    <div class="skill-header">
+                        <h4>Vue.js</h4>
+                        <span>60%</span>
+                    </div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 60%;"></div></div>
+                </div>
+            </div>
+
+            <div id="design" class="tab-content">
+                <div class="skill-item-card" style="--skill-color: var(--color-secondary);">
+                    <div class="skill-header">
+                        <h4>Figma / Sketch</h4>
+                        <span>95%</span>
+                    </div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 95%;"></div></div>
+                </div>
+                <div class="skill-item-card" style="--skill-color: #ff61f6;">
+                    <div class="skill-header">
+                        <h4>UX Research</h4>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 85%;"></div></div>
+                </div>
+                <div class="skill-item-card" style="--skill-color: #ff7c00;">
+                    <div class="skill-header">
+                        <h4>Illustrator / Photoshop</h4>
+                        <span>70%</span>
+                    </div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 70%;"></div></div>
+                </div>
+                <div class="skill-item-card" style="--skill-color: #6366f1;">
+                    <div class="skill-header">
+                        <h4>Branding & Identity</h4>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 80%;"></div></div>
+                </div>
+            </div>
+
+            <div id="backend" class="tab-content">
+                <div class="skill-item-card" style="--skill-color: var(--color-tertiary);">
+                    <div class="skill-header">
+                        <h4>Node.js & Express</h4>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 80%;"></div></div>
+                </div>
+                <div class="skill-item-card" style="--skill-color: #47a248;">
+                    <div class="skill-header">
+                        <h4>MongoDB & Mongoose</h4>
+                        <span>75%</span>
+                    </div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 75%;"></div></div>
+                </div>
+                <div class="skill-item-card" style="--skill-color: #e34c26;">
+                    <div class="skill-header">
+                        <h4>RESTful APIs</h4>
+                        <span>90%</span>
+                    </div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 90%;"></div></div>
+                </div>
+                <div class="skill-item-card" style="--skill-color: #cc2973;">
+                    <div class="skill-header">
+                        <h4>Firebase / Supabase</h4>
+                        <span>70%</span>
+                    </div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 70%;"></div></div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    
+    <script>
+        // 1. Dữ liệu Kỹ năng để tạo thanh tiến trình động
+        // Lưu ý: Dữ liệu này đã được nhúng trực tiếp trong HTML, 
+        // nhưng chúng ta sẽ dùng JS để quản lý Tab và hiệu ứng
+        
+        // 2. Tab Functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            function switchTab(targetTab) {
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to the selected button and content
+                const activeContent = document.getElementById(targetTab);
+                const activeButton = document.querySelector(`.tab-button[data-tab="${targetTab}"]`);
+
+                if (activeButton) activeButton.classList.add('active');
+                if (activeContent) activeContent.classList.add('active');
+            }
+
+            switchTab('frontend'); // Đảm bảo tab Frontend được kích hoạt khi tải
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetTab = button.getAttribute('data-tab');
+                    switchTab(targetTab);
+                });
+            });
+
+            // 3. 3D Tilt Effect on Glass Cards
+            document.querySelectorAll('.glass-card').forEach(card => {
+                card.addEventListener('mousemove', handleTilt);
+                card.addEventListener('mouseleave', handleReset);
+                
+                // Set initial glow color based on data attribute
+                const glowColor = card.getAttribute('data-glow-color') || 'var(--color-primary)';
+                card.style.setProperty('--card-glow-color', glowColor);
+            });
+
+            function handleTilt(e) {
+                const card = e.currentTarget;
+                const rect = card.getBoundingClientRect();
+                
+                const x = e.clientX - rect.left; 
+                const y = e.clientY - rect.top;  
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                // Tính góc nghiêng (tối đa 6 độ)
+                const rotateX = (y - centerY) / 30; 
+                const rotateY = (x - centerX) / 25; 
+
+                // Áp dụng 3D transform 
+                card.style.transform = `perspective(1000px) scale(1.02) rotateX(${-rotateX}deg) rotateY(${rotateY}deg)`;
+                
+                // Cập nhật biến CSS cho hiệu ứng light glow
+                const glowX = (x / rect.width) * 100;
+                const glowY = (y / rect.height) * 100;
+                card.style.setProperty('--glow-x', `${glowX}%`);
+                card.style.setProperty('--glow-y', `${glowY}%`);
+            }
+
+            function handleReset(e) {
+                const card = e.currentTarget;
+                card.style.transform = 'perspective(1000px) scale(1.0) rotateX(0deg) rotateY(0deg)';
+                card.style.setProperty('--glow-x', '50%');
+                card.style.setProperty('--glow-y', '50%');
+            }
+            
+            // 4. Trigger Progress Bar Animation (Optional: For initial load)
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.querySelectorAll('.skill-progress').forEach(progress => {
+                            const percent = progress.parentElement.previousElementSibling.querySelector('span:last-child').textContent;
+                            progress.style.width = percent;
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.tab-content').forEach(content => {
+                observer.observe(content);
+            });
+        });
+    </script>
+</body>
+</html>
